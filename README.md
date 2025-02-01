@@ -7,6 +7,7 @@
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Commit Message Format](#commit-message-format)
+- [Version Management](#version-management)
 
 ## Prerequisites
 - Node.js (v16 or higher)
@@ -194,3 +195,162 @@ npm run prepare
 ```bash
 npx semantic-release --dry-run
 ```
+
+## Version Management
+
+### Example Versioning Flow
+
+Here's how versions progress through different branches:
+
+```bash
+# On dev branch (Development)
+git checkout dev
+git commit -m "feat: new feature"
+# Creates: 1.0.0-beta.1
+
+# On qa branch (Quality Assurance)
+git checkout qa
+git merge dev
+# Creates: 1.0.0-qa.1
+
+# On uat branch (User Acceptance Testing)
+git checkout uat
+git merge qa
+# Creates: 1.0.0-uat.1
+
+# On main branch (Production)
+git checkout main
+git merge uat
+# Creates: 1.0.0
+
+# On hotfix branch (Emergency Fixes)
+git checkout hotfix
+git commit -m "fix: critical bug"
+# Creates: 1.0.1-hotfix.1
+```
+
+### Commit Types and Version Updates
+
+The following commit types will trigger version updates:
+
+| Commit Type | Description                | Version Bump | Example                |
+|------------|----------------------------|--------------|------------------------|
+| `feat`     | New feature                | Minor        | 1.0.0 -> 1.1.0        |
+| `fix`      | Bug fix                    | Patch        | 1.0.0 -> 1.0.1        |
+| `perf`     | Performance improvement    | Patch        | 1.0.0 -> 1.0.1        |
+| `docs`     | Documentation changes      | Patch        | 1.0.0 -> 1.0.1        |
+| `style`    | Code style changes         | Patch        | 1.0.0 -> 1.0.1        |
+| `refactor` | Code refactoring           | Patch        | 1.0.0 -> 1.0.1        |
+| `test`     | Adding/updating tests      | Patch        | 1.0.0 -> 1.0.1        |
+| `build`    | Build system changes       | Patch        | 1.0.0 -> 1.0.1        |
+| `ci`       | CI configuration changes   | Patch        | 1.0.0 -> 1.0.1        |
+| `revert`   | Reverting changes          | Patch        | 1.0.0 -> 1.0.1        |
+| `BREAKING` | Breaking changes           | Major        | 1.0.0 -> 2.0.0        |
+
+### Environment-Specific Versions
+
+Each environment has its own version format:
+
+| Environment        | Branch  | Version Format    | Example        |
+|-------------------|---------|-------------------|----------------|
+| Production        | main    | x.y.z            | 1.0.0          |
+| Development       | dev     | x.y.z-beta.n     | 1.0.0-beta.1   |
+| QA               | qa      | x.y.z-qa.n       | 1.0.0-qa.1     |
+| UAT              | uat     | x.y.z-uat.n      | 1.0.0-uat.1    |
+| Hotfix           | hotfix  | x.y.z-hotfix.n   | 1.0.1-hotfix.1 |
+
+### Breaking Changes
+
+To create a breaking change that triggers a major version bump:
+
+```bash
+git commit -m "feat: new authentication system
+BREAKING CHANGE: New authentication system is not backward compatible with previous versions"
+# This will trigger a major version bump (1.0.0 -> 2.0.0)
+```
+
+### Version Inheritance Flow
+
+The typical version progression through environments:
+
+1. Development (dev):
+   ```bash
+   git checkout dev
+   git commit -m "feat: new feature"
+   # Creates: 1.0.0-beta.1
+   ```
+
+2. Quality Assurance (qa):
+   ```bash
+   git checkout qa
+   git merge dev
+   # Creates: 1.0.0-qa.1
+   ```
+
+3. User Acceptance Testing (uat):
+   ```bash
+   git checkout uat
+   git merge qa
+   # Creates: 1.0.0-uat.1
+   ```
+
+4. Production (main):
+   ```bash
+   git checkout main
+   git merge uat
+   # Creates: 1.0.0
+   ```
+
+### Hotfix Process
+
+For emergency fixes:
+
+1. Create hotfix:
+   ```bash
+   git checkout hotfix
+   git commit -m "fix: critical security issue"
+   # Creates: 1.0.1-hotfix.1
+   ```
+
+2. After testing, merge to main:
+   ```bash
+   git checkout main
+   git merge hotfix
+   # Creates: 1.0.1
+   ```
+
+3. Sync back to other environments:
+   ```bash
+   git checkout dev
+   git merge main
+   # Updates dev with the hotfix
+   ```
+
+### Version Files and Artifacts
+
+After each release, the following will be updated:
+
+1. `package.json` - Version number updated
+2. `CHANGELOG.md` - Release notes added
+3. Git tag created (e.g., v1.0.0)
+4. GitHub release created
+5. Release artifacts generated in 'dist' directory
+
+### Troubleshooting Version Issues
+
+1. Check current version:
+   ```bash
+   npm version
+   # or
+   cat package.json | grep version
+   ```
+
+2. List all tags:
+   ```bash
+   git tag --list
+   ```
+
+3. View version history:
+   ```bash
+   git log --pretty=format:"%h %d %s" --graph
+   ```
