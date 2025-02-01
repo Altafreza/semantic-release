@@ -1,13 +1,21 @@
 {
   "name": "semantic-release",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:dev": "vite --mode development",
+    "start:qa": "vite --mode qa",
+    "start:uat": "vite --mode uat",
+    "start:prod": "vite --mode production",
+    "release": "semantic-release",
+    "release:dev": "semantic-release --no-ci --branches dev",
+    "release:qa": "semantic-release --no-ci --branches qa",
+    "release:uat": "semantic-release --no-ci --branches uat"
   },
   "dependencies": {
     "react": "^18.3.1",
