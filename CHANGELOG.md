@@ -1,5 +1,7 @@
 # Semantic Release Changelog
 
+## [1.0.1](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v1.0.1) (2025-02-01)
+
 # 1.0.0 (2025-02-01)
 
 
