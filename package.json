@@ -20,7 +20,7 @@
     "release:beta": "semantic-release --no-ci --branches develop",
     "release:qa": "semantic-release --no-ci --branches qa",
     "release:uat": "semantic-release --no-ci --branches uat",
-    "release:hotfix": "semantic-release --no-ci --branches hotfix"
+    "release:hotfix": "semantic-release --no-ci --branches hotfix --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator,@semantic-release/changelog,@semantic-release/npm,@semantic-release/git"
   },
   "dependencies": {
     "react": "^18.3.1",
