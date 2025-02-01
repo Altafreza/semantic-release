@@ -5,6 +5,88 @@
 
 ### Bug Fixes
 
+* **config:** disable npm package creation ([3bca4a3](https://github.com/Altafreza/semantic-release/commit/3bca4a304245904e5221f7b88a3e9c830e66e0df))
+* **config:** remove invalid tarballDir option ([76fd561](https://github.com/Altafreza/semantic-release/commit/76fd5619d23c7c45c7b5ff02e9dcfae6e1593758))
+* **new:** new bug fix ([81e1048](https://github.com/Altafreza/semantic-release/commit/81e1048b4bcd0a36d115a6a49ffb0877d2107b31))
+* **new:** nnnn ([175b5bb](https://github.com/Altafreza/semantic-release/commit/175b5bb905d28b3c179dfec9065fab39cb503eac))
+
+
+### Features
+
+* **ohk:** okhhh ([92fbb47](https://github.com/Altafreza/semantic-release/commit/92fbb47cdacbc1f3e47e5e7f49bca04a2ae2fc2f))
+* **okkk:** okk ([cd88e2d](https://github.com/Altafreza/semantic-release/commit/cd88e2d440e204aba83b5e80fe14f6e19553fcbc))
+
+
+### BREAKING CHANGES
+
+* **new:** Breaking Changes: How to create breaking changes and their impact
+
+# [2.0.0](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v2.0.0) (2025-02-01)
+
+
+### Bug Fixes
+
+* **config:** disable npm package creation ([3bca4a3](https://github.com/Altafreza/semantic-release/commit/3bca4a304245904e5221f7b88a3e9c830e66e0df))
+* **config:** remove invalid tarballDir option ([76fd561](https://github.com/Altafreza/semantic-release/commit/76fd5619d23c7c45c7b5ff02e9dcfae6e1593758))
+* **new:** new bug fix ([81e1048](https://github.com/Altafreza/semantic-release/commit/81e1048b4bcd0a36d115a6a49ffb0877d2107b31))
+* **new:** nnnn ([175b5bb](https://github.com/Altafreza/semantic-release/commit/175b5bb905d28b3c179dfec9065fab39cb503eac))
+
+
+### Features
+
+* **ohk:** okhhh ([92fbb47](https://github.com/Altafreza/semantic-release/commit/92fbb47cdacbc1f3e47e5e7f49bca04a2ae2fc2f))
+* **okkk:** okk ([cd88e2d](https://github.com/Altafreza/semantic-release/commit/cd88e2d440e204aba83b5e80fe14f6e19553fcbc))
+
+
+### BREAKING CHANGES
+
+* **new:** Breaking Changes: How to create breaking changes and their impact
+
+# [2.0.0](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v2.0.0) (2025-02-01)
+
+
+### Bug Fixes
+
+* **config:** disable npm package creation ([3bca4a3](https://github.com/Altafreza/semantic-release/commit/3bca4a304245904e5221f7b88a3e9c830e66e0df))
+* **config:** remove invalid tarballDir option ([76fd561](https://github.com/Altafreza/semantic-release/commit/76fd5619d23c7c45c7b5ff02e9dcfae6e1593758))
+* **new:** new bug fix ([81e1048](https://github.com/Altafreza/semantic-release/commit/81e1048b4bcd0a36d115a6a49ffb0877d2107b31))
+* **new:** nnnn ([175b5bb](https://github.com/Altafreza/semantic-release/commit/175b5bb905d28b3c179dfec9065fab39cb503eac))
+
+
+### Features
+
+* **ohk:** okhhh ([92fbb47](https://github.com/Altafreza/semantic-release/commit/92fbb47cdacbc1f3e47e5e7f49bca04a2ae2fc2f))
+* **okkk:** okk ([cd88e2d](https://github.com/Altafreza/semantic-release/commit/cd88e2d440e204aba83b5e80fe14f6e19553fcbc))
+
+
+### BREAKING CHANGES
+
+* **new:** Breaking Changes: How to create breaking changes and their impact
+
+# [2.0.0](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v2.0.0) (2025-02-01)
+
+
+### Bug Fixes
+
+* **new:** new bug fix ([81e1048](https://github.com/Altafreza/semantic-release/commit/81e1048b4bcd0a36d115a6a49ffb0877d2107b31))
+* **new:** nnnn ([175b5bb](https://github.com/Altafreza/semantic-release/commit/175b5bb905d28b3c179dfec9065fab39cb503eac))
+
+
+### Features
+
+* **ohk:** okhhh ([92fbb47](https://github.com/Altafreza/semantic-release/commit/92fbb47cdacbc1f3e47e5e7f49bca04a2ae2fc2f))
+* **okkk:** okk ([cd88e2d](https://github.com/Altafreza/semantic-release/commit/cd88e2d440e204aba83b5e80fe14f6e19553fcbc))
+
+
+### BREAKING CHANGES
+
+* **new:** Breaking Changes: How to create breaking changes and their impact
+
+# [2.0.0](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v2.0.0) (2025-02-01)
+
+
+### Bug Fixes
+
 * **new:** new bug fix ([81e1048](https://github.com/Altafreza/semantic-release/commit/81e1048b4bcd0a36d115a6a49ffb0877d2107b31))
 * **new:** nnnn ([175b5bb](https://github.com/Altafreza/semantic-release/commit/175b5bb905d28b3c179dfec9065fab39cb503eac))
 
