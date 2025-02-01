@@ -46,6 +46,6 @@
   "publishConfig": {
     "access": "restricted"
   },
-  "version": "1.0.1-hotfix.1",
+  "version": "1.0.0-hotfix.1",
   "description": "A demo project to showcase semantic-release with proper branch versioning"
 }
