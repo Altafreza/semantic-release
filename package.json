@@ -2,7 +2,7 @@
   "name": "semantic-release",
   "private": true,
   "type": "module",
-  "version": "1.2.2",
+  "version": "1.2.2-uat.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
