@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Altafreza/semantic-release/compare/1.1.0...1.1.1) (2025-02-01)
+
+
+### Bug Fixes
+
+* update semantic-release configuration with proper tag format ([979ddb1](https://github.com/Altafreza/semantic-release/commit/979ddb1b77a6821cb89886a2448f5b52bdd47127))
+
 # [1.1.0](https://github.com/Altafreza/semantic-release/compare/1.0.2...1.1.0) (2025-02-01)
 
 
