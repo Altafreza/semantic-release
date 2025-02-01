@@ -1,6 +1,3 @@
-<<<<<<< HEAD
- 
-=======
 {
   "plugins": [
     "@semantic-release/commit-analyzer",
@@ -17,11 +14,20 @@
       "prerelease": "beta"
     },
     {
+      "name": "qa",
+      "channel": "qa",
+      "prerelease": "qa"
+    },
+    {
+      "name": "uat",
+      "channel": "uat",
+      "prerelease": "uat"
+    },
+    {
       "name": "hotfix",
       "channel": "hotfix",
       "prerelease": "hotfix"
     }
   ],
   "tagFormat": "${version}"
-} 
->>>>>>> develop
+}
