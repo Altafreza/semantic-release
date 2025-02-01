@@ -49,14 +49,15 @@ export default {
     }],
     ['@semantic-release/npm', {
       npmPublish: false,
-      tarballDir: 'dist'
+      pkgRoot: '.',
+      tarballDir: false
     }],
     ['@semantic-release/git', {
-      assets: ['package.json', 'CHANGELOG.md', 'dist/**/*.{js,css}'],
+      assets: ['package.json', 'CHANGELOG.md'],
       message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
     }],
     ['@semantic-release/github', {
-      assets: 'dist/*.tgz',
+      assets: [],
       successComment: '🎉 This ${issue.pull_request ? "PR is included" : "issue is fixed"} in version ${nextRelease.version}',
       failComment: "The release failed due to an error. Please check the workflow logs.",
       failTitle: "❌ Release Failed",
