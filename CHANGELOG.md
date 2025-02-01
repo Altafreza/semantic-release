@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Altafreza/semantic-release/compare/1.1.0...1.2.0) (2025-02-01)
+
+
+### Features
+
+* add cypress watch mode for interactive testing ([e329eb3](https://github.com/Altafreza/semantic-release/commit/e329eb378ec5d2b19b498e361c2503c4b3e080cf))
+
 # [1.1.0](https://github.com/Altafreza/semantic-release/compare/1.0.2...1.1.0) (2025-02-01)
 
 
