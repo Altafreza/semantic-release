@@ -1,3 +1,13 @@
+## [1.0.3](https://github.com/Altafreza/semantic-release/compare/1.0.2...1.0.3) (2025-02-01)
+
+
+### Bug Fixes
+
+* resolve merge conflicts in .releaserc ([f4500ed](https://github.com/Altafreza/semantic-release/commit/f4500edc2d1cf387fabdab3b5b66914941ce1b18))
+* resolve merge conflicts in package.json ([44e5747](https://github.com/Altafreza/semantic-release/commit/44e57470e807f81300e0e13b8397231c6e5c01bb))
+* update semantic-release configuration for proper branch versioning ([f06abcb](https://github.com/Altafreza/semantic-release/commit/f06abcb84c718a673d64b5509466941dd1381b77))
+* update semantic-release configuration for proper branch versioning ([c7bad8a](https://github.com/Altafreza/semantic-release/commit/c7bad8a819bfd4dc346f8766ccf5988fb8f89c1a))
+
 <<<<<<< HEAD
 ## [1.0.2](https://github.com/Altafreza/semantic-release/compare/1.0.1...1.0.2) (2025-02-01)
 
