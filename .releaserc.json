@@ -21,7 +21,7 @@
     {
       "name": "hotfix",
       "channel": "hotfix",
-      "prerelease": "hotfix"
+      "prerelease": true
     }
   ],
   "plugins": [
