@@ -1,5 +1,17 @@
 # Semantic Release Changelog
 
+# [2.2.0](https://github.com/Altafreza/semantic-release/compare/v2.1.1...2.2.0) (2025-02-01)
+
+
+### Bug Fixes
+
+* update semantic-release configuration with proper tag format ([979ddb1](https://github.com/Altafreza/semantic-release/commit/979ddb1b77a6821cb89886a2448f5b52bdd47127))
+
+
+### Features
+
+* add environment configuration ([12b6d1b](https://github.com/Altafreza/semantic-release/commit/12b6d1b6a5681e73c781effaecd8859119d4c9ac))
+
 # [2.2.0](https://github.com/Altafreza/semantic-release/compare/v2.1.1...v2.2.0) (2025-02-01)
 
 
