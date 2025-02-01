@@ -3,14 +3,14 @@ on:
   push:
     branches:
       - main
-      - dev
+      - develop
       - qa
       - uat
       - hotfix
   pull_request:
     branches:
       - main
-      - dev
+      - develop
       - qa
       - uat
       - hotfix
@@ -52,7 +52,7 @@ jobs:
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
           if [ "$BRANCH_NAME" = "main" ]; then
             npm run build:prod
-          elif [ "$BRANCH_NAME" = "dev" ]; then
+          elif [ "$BRANCH_NAME" = "develop" ]; then
             npm run build:dev
           elif [ "$BRANCH_NAME" = "qa" ]; then
             npm run build:qa
@@ -64,15 +64,25 @@ jobs:
             npm run build:dev
           fi
         env:
-          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || contains(github.ref, 'refs/heads/qa') && 'qa' || contains(github.ref, 'refs/heads/uat') && 'uat' || 'development' }}
+          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/develop' && 'development' || github.ref == 'refs/heads/qa' && 'qa' || github.ref == 'refs/heads/uat' && 'uat' || github.ref == 'refs/heads/hotfix' && 'production' || 'development' }}
 
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GIT_AUTHOR_NAME: ${{ github.actor }}
           GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_COMMITTER_NAME: ${{ github.actor }}
           GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || contains(github.ref, 'refs/heads/qa') && 'qa' || contains(github.ref, 'refs/heads/uat') && 'uat' || 'development' }}
-        run: npx semantic-release
+          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/develop' && 'development' || github.ref == 'refs/heads/qa' && 'qa' || github.ref == 'refs/heads/uat' && 'uat' || github.ref == 'refs/heads/hotfix' && 'production' || 'development' }}
+        run: |
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            npm run release
+          elif [ "$GITHUB_REF" = "refs/heads/develop" ]; then
+            npm run release:beta
+          elif [ "$GITHUB_REF" = "refs/heads/qa" ]; then
+            npm run release:qa
+          elif [ "$GITHUB_REF" = "refs/heads/uat" ]; then
+            npm run release:uat
+          elif [ "$GITHUB_REF" = "refs/heads/hotfix" ]; then
+            npm run release:hotfix
+          fi
