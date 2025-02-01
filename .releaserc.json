@@ -5,23 +5,19 @@
     },
     {
       "name": "develop",
-      "channel": "beta",
       "prerelease": "beta"
     },
     {
       "name": "qa",
-      "channel": "qa",
       "prerelease": "qa"
     },
     {
       "name": "uat",
-      "channel": "uat",
       "prerelease": "uat"
     },
     {
       "name": "hotfix",
-      "channel": "hotfix",
-      "prerelease": true
+      "prerelease": "hotfix"
     }
   ],
   "plugins": [
