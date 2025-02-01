@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Altafreza/semantic-release/compare/1.2.0...1.3.0) (2025-02-01)
+
+
+### Features
+
+* add new feature comment ([16c3afd](https://github.com/Altafreza/semantic-release/commit/16c3afdbaee3e198505d6a867339e9caeab36a31))
+
 # [1.2.0](https://github.com/Altafreza/semantic-release/compare/1.1.0...1.2.0) (2025-02-01)
 
 
