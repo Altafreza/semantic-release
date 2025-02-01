@@ -2,7 +2,7 @@
   "name": "semantic-release",
   "private": true,
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.0-uat.1",
   "scripts": {
     "prepare": "husky",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
