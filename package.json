@@ -20,7 +20,9 @@
     "release": "semantic-release",
     "format": "prettier --write \"src/**/*.{js,ts,vue}\"",
     
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepare": "husky install",
+    "commit": "git-cz"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -42,12 +44,20 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
     "semantic-release": "^24.2.1",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.0.11"
   },
   "publishConfig": {
     "access": "restricted"
   },
-  "release": {
-    "branches": ["main", "dev", "qa", "uat", "hotfix"]
+ 
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

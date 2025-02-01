@@ -28,6 +28,8 @@ jobs:
         run: |
           if [[ "${{ github.base_ref }}" == "main" ]]; then
             npm run build:prod
+          elif [[ "${{ github.base_ref }}" == "dev" ]]; then
+            npm run build:dev
           elif [[ "${{ github.base_ref }}" == "qa" ]]; then
             npm run build:qa
           elif [[ "${{ github.base_ref }}" == "uat" ]]; then

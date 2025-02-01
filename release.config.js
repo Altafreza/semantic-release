@@ -1,9 +1,9 @@
 export default {
     branches: [
       { name: "main" },  // Production Stable Release
-      { name: "dev", prerelease: "beta" },  // Development (Beta)
-      { name: "qa", prerelease: "qa" },  // QA Release
-      { name: "uat", prerelease: "uat" },  // UAT Release
+      { name: "dev", channel: "beta", prerelease: "beta" },  // Development (Beta)
+      { name: "qa", channel: "qa", prerelease: "qa" },  // QA Release
+      { name: "uat", channel: "uat", prerelease: "uat" },  // UAT Release
       { name: "hotfix", prerelease: "hotfix" }  // Hotfixes
     ],
     plugins: [
@@ -40,17 +40,22 @@ export default {
         "changelogFile": "CHANGELOG.md",
         "changelogTitle": "# Semantic Release Changelog"
       }],
+      ["@semantic-release/npm", {
+        "npmPublish": false
+      }],
       ["@semantic-release/github", {
         "assets": ["dist/**/*.{js,css}", "CHANGELOG.md", "package.json"],
         "successComment": "🎉 This ${issue.pull_request ? 'PR is included' : 'issue is fixed'} in version ${nextRelease.version}",
-        "failTitle": "❌ The release failed",
-        "failComment": "Release failed due to an error.",
+        "failComment": "The release failed due to an error. Please check the workflow logs.",
+        "failTitle": "❌ Release Failed",
         "labels": ["released"],
-        "addReleases": "bottom"
+        "addReleases": "bottom",
+        "releasedLabels": ["released"]
       }],
       ["@semantic-release/git", {
         "assets": ["package.json", "CHANGELOG.md", "dist/**/*.{js,css}"],
         "message": "chore(release): 🔖 ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }]
-    ]
+    ],
+    "preset": "angular"
   };
