@@ -27,9 +27,21 @@ dist-ssr
 # Environment files
 .env*
 !.env.example
+!.env.dev
+!.env.qa
+!.env.uat
+!.env.prod
 .npmrc
 .release-env
 
 # Build
 dist/
 coverage/
+
+# Misc
+.DS_Store
+*.pem
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

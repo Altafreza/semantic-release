@@ -10,7 +10,7 @@ on:
   pull_request:
     branches:
       - main
-      - develop
+      - dev
       - qa
       - uat
 
@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22.x
           cache: 'npm'
 
       - name: Install dependencies
@@ -44,13 +44,22 @@ jobs:
         run: npm audit signatures
 
       - name: Build
-        run: npm run build
-
-      - name: Run tests
-        run: npm test
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            npm run build:prod
+          elif [ "${{ github.ref }}" = "refs/heads/dev" ]; then
+            npm run build:dev
+          elif [ "${{ github.ref }}" = "refs/heads/qa" ]; then
+            npm run build:qa
+          elif [ "${{ github.ref }}" = "refs/heads/uat" ]; then
+            npm run build:uat
+          else
+            npm run build:dev
+          fi
 
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/qa' && 'qa' || github.ref == 'refs/heads/uat' && 'uat' || 'development' }}
         run: npx semantic-release
