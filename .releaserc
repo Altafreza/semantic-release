@@ -1,1 +1,27 @@
+<<<<<<< HEAD
  
+=======
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    "@semantic-release/git"
+  ],
+  "branches": [
+    "main",
+    {
+      "name": "develop",
+      "channel": "beta",
+      "prerelease": "beta"
+    },
+    {
+      "name": "hotfix",
+      "channel": "hotfix",
+      "prerelease": "hotfix"
+    }
+  ],
+  "tagFormat": "${version}"
+} 
+>>>>>>> develop
