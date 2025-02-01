@@ -1,5 +1,0 @@
-  develop[m 4020872 [ahead 2] chore(release): 1.0.0 [skip ci]
-* [32mhotfix [m 3093c3d [ahead 1] chore(release): 1.0.0 [skip ci]
-  main   [m 09013c5 [ahead 1] chore(release): 1.0.0 [skip ci]
-  qa     [m f9d4a7e chore(release): 2.2.0 [skip ci]
-  uat    [m 93a59a2 fix: update semantic-release configuration with proper tag format and branch names

@@ -26,21 +26,18 @@ export default {
     ['@semantic-release/commit-analyzer', {
       preset: 'angular',
       releaseRules: [
-        { type: 'feat', release: 'minor' },     // New features trigger minor release
-        { type: 'fix', release: 'patch' },      // Bug fixes trigger patch release
-        { type: 'perf', release: 'patch' },     // Performance improvements trigger patch release
-        { type: 'docs', release: 'patch' },     // Documentation changes trigger patch release
-        { type: 'style', release: 'patch' },    // Style changes trigger patch release
-        { type: 'refactor', release: 'patch' }, // Code refactoring triggers patch release
-        { type: 'test', release: 'patch' },     // Adding tests triggers patch release
-        { type: 'build', release: 'patch' },    // Build changes trigger patch release
-        { type: 'ci', release: 'patch' },       // CI changes trigger patch release
-        { breaking: true, release: 'major' },    // Breaking changes trigger major release
-        { type: 'revert', release: 'patch' }    // Reverts trigger patch release
-      ],
-      parserOpts: {
-        noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES']
-      }
+        { type: 'feat', release: 'minor' },
+        { type: 'fix', release: 'patch' },
+        { type: 'perf', release: 'patch' },
+        { type: 'docs', release: 'patch' },
+        { type: 'style', release: 'patch' },
+        { type: 'refactor', release: 'patch' },
+        { type: 'test', release: 'patch' },
+        { type: 'build', release: 'patch' },
+        { type: 'ci', release: 'patch' },
+        { breaking: true, release: 'major' },
+        { type: 'revert', release: 'patch' }
+      ]
     }],
     '@semantic-release/release-notes-generator',
     ['@semantic-release/changelog', {
@@ -53,17 +50,8 @@ export default {
     }],
     ['@semantic-release/git', {
       assets: ['package.json', 'package-lock.json', 'CHANGELOG.md'],
-      message: 'chore(release): v${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
-    }],
-    ['@semantic-release/github', {
-      assets: [],
-      successComment: '🎉 This ${issue.pull_request ? "PR is included" : "issue is fixed"} in version ${nextRelease.version}',
-      failComment: "The release failed due to an error. Please check the workflow logs.",
-      failTitle: "❌ Release Failed",
-      labels: ["released"],
-      releasedLabels: ["released"]
+      message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
     }]
   ],
-  preset: 'angular',
-  tagFormat: 'v${version}'
+  tagFormat: '${version}'
 }
