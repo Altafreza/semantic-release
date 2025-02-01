@@ -2,7 +2,7 @@ export default {
   branches: [
     'main',  // Production Stable Release
     { 
-      name: 'dev', 
+      name: 'develop', 
       channel: 'beta', 
       prerelease: 'beta'  // Will create versions like 1.0.0-beta.1
     },
@@ -15,6 +15,11 @@ export default {
       name: 'uat', 
       channel: 'uat', 
       prerelease: 'uat'  // Will create versions like 1.0.0-uat.1
+    },
+    {
+      name: 'hotfix',
+      channel: 'hotfix',
+      prerelease: 'hotfix' // Will create versions like 1.0.1-hotfix.1
     }
   ],
   plugins: [
@@ -60,5 +65,5 @@ export default {
     }]
   ],
   preset: 'angular',
-  tagFormat: 'v${version}'
+  tagFormat: '${version}'
 }
