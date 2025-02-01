@@ -1,5 +1,12 @@
 # Semantic Release Changelog
 
+## [1.0.1](https://github.com/Altafreza/semantic-release/compare/1.0.0...1.0.1) (2025-02-01)
+
+
+### Bug Fixes
+
+* critical security patch ([a0302af](https://github.com/Altafreza/semantic-release/commit/a0302af4a9c9f225b860efe3fdcb76ac47eddca1))
+
 # 1.0.0 (2025-02-01)
 
 
