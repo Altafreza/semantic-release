@@ -7,33 +7,29 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  const env = loadEnv(mode, process.cwd(), '');
+  // Load env file based on mode
+  const env = loadEnv(mode, '.', 'VITE_');
   
+  console.log(`Loading environment for mode: ${mode}`);
+  console.log('Environment variables:', {
+    VITE_APP_ENV: env.VITE_APP_ENV,
+    VITE_API_URL: env.VITE_API_URL,
+    VITE_APP_TITLE: env.VITE_APP_TITLE,
+    VITE_APP_DEBUG: env.VITE_APP_DEBUG,
+  });
+
   return {
     plugins: [react()],
-    define: {
-      /* global process */
-      'process.env': JSON.stringify(env),
-      __APP_ENV__: env.APP_ENV,
-    },
+    envPrefix: 'VITE_',
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
     },
     build: {
-      sourcemap: mode !== 'production',
       outDir: 'dist',
+      sourcemap: true,
       emptyOutDir: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
-          },
-        },
-      },
     },
     server: {
       port: 3000,

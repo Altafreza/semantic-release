@@ -15,11 +15,6 @@ export default {
       name: 'uat', 
       channel: 'uat', 
       prerelease: 'uat'  // Will create versions like 1.0.0-uat.1
-    },
-    { 
-      name: 'hotfix', 
-      channel: 'hotfix',
-      prerelease: 'hotfix'  // Will create versions like 1.0.0-hotfix.1
     }
   ],
   plugins: [
