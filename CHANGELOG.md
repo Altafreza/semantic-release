@@ -1,5 +1,19 @@
 # Semantic Release Changelog
 
+# [2.1.0](https://github.com/Altafreza/semantic-release/compare/v2.0.0...v2.1.0) (2025-02-01)
+
+
+### Features
+
+* add new feature comment ([d119d78](https://github.com/Altafreza/semantic-release/commit/d119d78b7f45cafce5c152cee0689328f1e9d54e))
+
+# [2.1.0](https://github.com/Altafreza/semantic-release/compare/v2.0.0...v2.1.0) (2025-02-01)
+
+
+### Features
+
+* add new feature comment ([d119d78](https://github.com/Altafreza/semantic-release/commit/d119d78b7f45cafce5c152cee0689328f1e9d54e))
+
 # [2.0.0](https://github.com/Altafreza/semantic-release/compare/v1.0.0...v2.0.0) (2025-02-01)
 
 
