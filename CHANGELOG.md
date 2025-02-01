@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Altafreza/semantic-release/compare/1.0.0...1.0.1) (2025-02-01)
+
+
+### Bug Fixes
+
+* update hotfix branch configuration for proper prerelease versioning ([6b6adbe](https://github.com/Altafreza/semantic-release/commit/6b6adbec332fb5824051ac39b40de3852beda800))
+
 # 1.0.0 (2025-02-01)
 
 
