@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Altafreza/semantic-release/compare/1.2.1...1.2.2) (2025-02-01)
+
+
+### Bug Fixes
+
+* update semantic-release configuration with proper tag format and branch names ([93a59a2](https://github.com/Altafreza/semantic-release/commit/93a59a2f61f4b1be1b03598470df7905a0e34719))
+
 ## [1.2.1](https://github.com/Altafreza/semantic-release/compare/1.2.0...1.2.1) (2025-02-01)
 
 
