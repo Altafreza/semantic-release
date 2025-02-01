@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/Altafreza/semantic-release/compare/1.0.2...1.1.0) (2025-02-01)
+
+
+### Bug Fixes
+
+* update semantic-release configuration for proper branch versioning ([42ca819](https://github.com/Altafreza/semantic-release/commit/42ca819dba4fefa8f4482cbfe8fe40becf98f111))
+* update semantic-release configuration for proper branch versioning ([c7bad8a](https://github.com/Altafreza/semantic-release/commit/c7bad8a819bfd4dc346f8766ccf5988fb8f89c1a))
+
+
+### Features
+
+* add e2e testing script ([0760f77](https://github.com/Altafreza/semantic-release/commit/0760f774842dc71cf690e703e689f483f808e5e9))
+* add e2e testing script ([e63ca53](https://github.com/Altafreza/semantic-release/commit/e63ca53c0e16591b379694dde96d3855824e535c))
+* add release scripts ([b393da8](https://github.com/Altafreza/semantic-release/commit/b393da88e1a20c1c0b971586b7759309d4289930))
+
 # Semantic Release Changelog
 
 ## [1.0.2](https://github.com/Altafreza/semantic-release/compare/1.0.1...1.0.2) (2025-02-01)
