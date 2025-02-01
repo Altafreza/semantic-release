@@ -4,9 +4,10 @@ on:
   pull_request:
     branches:
       - main
-      - dev
+      - develop
       - qa
       - uat
+      - hotfix
 
 jobs:
   validate:
@@ -28,12 +29,16 @@ jobs:
         run: |
           if [[ "${{ github.base_ref }}" == "main" ]]; then
             npm run build:prod
-          elif [[ "${{ github.base_ref }}" == "dev" ]]; then
+          elif [[ "${{ github.base_ref }}" == "develop" ]]; then
             npm run build:dev
           elif [[ "${{ github.base_ref }}" == "qa" ]]; then
             npm run build:qa
           elif [[ "${{ github.base_ref }}" == "uat" ]]; then
             npm run build:uat
+          elif [[ "${{ github.base_ref }}" == "hotfix" ]]; then
+            npm run build:prod
           else
             npm run build:dev
           fi
+        env:
+          NODE_ENV: ${{ github.base_ref == 'main' && 'production' || github.base_ref == 'develop' && 'development' || github.base_ref == 'qa' && 'qa' || github.base_ref == 'uat' && 'uat' || github.base_ref == 'hotfix' && 'production' || 'development' }}
