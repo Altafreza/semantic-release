@@ -1,356 +1,945 @@
-# Semantic Release Setup Guide
+# Semantic Release - Complete Development Guide
 
-## Table of Contents
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [GitHub Token Setup](#github-token-setup)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Commit Message Format](#commit-message-format)
-- [Version Management](#version-management)
+A comprehensive guide for managing releases across different environments using semantic versioning.
 
-## Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Git
-- GitHub account
+## 🎯 Visual Guide for Developers
 
-## Installation
-
-1. Install dependencies:
-```bash
-npm install --save-dev semantic-release @semantic-release/git @semantic-release/github @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator commitizen cz-conventional-changelog husky @commitlint/cli @commitlint/config-conventional
+### Complete Development & Release Flow
+```mermaid
+graph TD
+    subgraph "Development Phase"
+        A[Developer] -->|Create| B[Feature Branch]
+        B -->|Commit| C[feat: new feature]
+        C -->|PR & Merge| D[develop branch]
+        D -->|npm run release:beta| E[v1.2.0-beta.1]
+    end
+    
+    subgraph "QA Phase"
+        E -->|Merge to QA| F[qa branch]
+        F -->|npm run release:qa| G[v1.2.0-qa.1]
+        G -->|QA Testing| H{Tests Pass?}
+        H -->|No| F
+        H -->|Yes| I[Ready for UAT]
+    end
+    
+    subgraph "UAT Phase"
+        I -->|Merge to UAT| J[uat branch]
+        J -->|npm run release:uat| K[v1.2.0-uat.1]
+        K -->|UAT Testing| L{Approved?}
+        L -->|No| J
+        L -->|Yes| M[Ready for Prod]
+    end
+    
+    subgraph "Production Phase"
+        M -->|Merge to Main| N[main branch]
+        N -->|npm run release| O[v1.2.0]
+        O -->|Deploy| P[Production]
+    end
 ```
 
-2. Add scripts to package.json:
-```json
-{
-  "scripts": {
-    "semantic-release": "semantic-release",
-    "prepare": "husky install",
-    "commit": "git-cz"
-  }
+### Version Flow & Inheritance
+```mermaid
+graph LR
+    A[Feature Branch] -->|merge| B[develop]
+    B -->|v1.2.0-beta.1| C[qa]
+    C -->|v1.2.0-qa.1| D[uat]
+    D -->|v1.2.0-uat.1| E[main]
+    E -->|v1.2.0| F[Production]
+```
+
+### Daily Development Workflow
+```mermaid
+graph TD
+    A[Start] -->|git checkout develop| B[Get Latest]
+    B -->|git checkout -b feature/xyz| C[Create Feature Branch]
+    C -->|Make Changes| D[Development]
+    D -->|git commit| E{Commit Type?}
+    E -->|feat:| F[Minor Version Bump]
+    E -->|fix:| G[Patch Version Bump]
+    E -->|feat!:| H[Major Version Bump]
+    F & G & H -->|Push & PR| I[Pull Request]
+    I -->|Review & Merge| J[Merge to develop]
+    J -->|npm run release:beta| K[Release Beta]
+```
+
+### Hotfix Process
+```mermaid
+graph TD
+    A[Production Issue] -->|git checkout -b hotfix/xyz main| B[Create Hotfix]
+    B -->|Fix Issue| C[Development]
+    C -->|git commit -m "fix: issue"| D[Commit Fix]
+    D -->|Merge to main| E[main branch]
+    E -->|npm run release| F[v1.2.1]
+    F -->|Backport| G[develop branch]
+    G -->|npm run release:beta| H[v1.2.1-beta.1]
+```
+
+### Release Artifacts Generation
+```mermaid
+graph LR
+    A[Commit] -->|Analyze| B[Version Bump]
+    B -->|Generate| C[Changelog]
+    C -->|Create| D[Git Tag]
+    D -->|Push| E[GitHub Release]
+```
+
+### Environment-Specific Colors & Indicators
+```mermaid
+graph LR
+    A[Development] -->|#22c55e Green| B[Safe to Experiment]
+    C[QA] -->|#eab308 Yellow| D[Testing in Progress]
+    E[UAT] -->|#f97316 Orange| F[Validation Phase]
+    G[Production] -->|#ef4444 Red| H[Handle with Care]
+```
+
+## 🚀 Quick Reference for Developers
+
+### 1. Daily Development Commands
+```bash
+# Start new feature
+git checkout develop
+git pull
+git checkout -b feature/xyz
+# ... make changes ...
+git commit -m "feat: add new feature"
+git push origin feature/xyz
+
+# Create PR and merge to develop
+npm run release:beta
+```
+
+### 2. Version Cheat Sheet
+| What Changed? | Commit Message | New Version |
+|--------------|----------------|-------------|
+| New Feature | `feat: add login` | 1.1.0-beta.1 |
+| Bug Fix | `fix: null check` | 1.0.1-beta.1 |
+| Breaking Change | `feat!: new API` | 2.0.0-beta.1 |
+
+### 3. Branch Quick Guide
+| I want to... | Use Branch | Command |
+|--------------|------------|---------|
+| Develop new feature | `feature/*` | `git checkout -b feature/xyz develop` |
+| Fix a bug | `bugfix/*` | `git checkout -b bugfix/xyz develop` |
+| Emergency prod fix | `hotfix/*` | `git checkout -b hotfix/xyz main` |
+
+### 4. Release Commands
+```bash
+npm run release:beta  # Develop → QA
+npm run release:qa    # QA → UAT
+npm run release:uat   # UAT → Prod
+npm run release      # Production Release
+```
+
+### 5. Common Scenarios
+
+#### A. Need to fix a bug in production?
+```bash
+git checkout main
+git checkout -b hotfix/critical-bug
+# fix the bug
+git commit -m "fix: critical bug"
+npm run release
+```
+
+#### B. Feature ready for QA?
+```bash
+git checkout qa
+git merge develop
+npm run release:qa
+```
+
+#### C. Resolve merge conflicts?
+```bash
+# Option 1: Keep their changes
+git merge develop -X theirs
+
+# Option 2: Keep our changes
+git merge develop -X ours
+```
+
+## 📑 Table of Contents
+1. [Quick Start](#-quick-start)
+2. [Branch Strategy](#-branch-strategy)
+3. [Version Management](#-version-management)
+4. [Development Workflow](#-development-workflow)
+5. [Release Process](#-release-process)
+6. [Commit Guidelines](#-commit-guidelines)
+7. [Troubleshooting](#-troubleshooting)
+8. [Behind The Scenes: Automation & Processes](#-behind-the-scenes-automation-processes)
+
+## 🚀 Quick Start
+
+### Installation
+```bash
+# Install dependencies
+npm install
+
+# Setup environment
+npm run setup
+```
+
+### Available Commands
+```bash
+npm run release        # Production release
+npm run release:beta   # Development release
+npm run release:qa     # QA release
+npm run release:uat    # UAT release
+npm run release:hotfix # Hotfix release
+```
+
+## 🌳 Branch Strategy
+
+### Branch Hierarchy
+```
+main (Production)
+  ↑
+uat (Pre-production)
+  ↑
+qa (Quality Assurance)
+  ↑
+develop (Development)
+  ↑
+feature/* (Feature Branches)
+```
+
+### Branch Purposes
+| Branch | Purpose | Version Format | Example |
+|--------|---------|----------------|---------|
+| `main` | Production releases | x.y.z | 1.2.2 |
+| `uat` | Pre-production testing | x.y.z-uat.n | 1.2.2-uat.1 |
+| `qa` | Quality assurance | x.y.z-qa.n | 1.2.1-qa.1 |
+| `develop` | Development integration | x.y.z-beta.n | 1.2.0-beta.1 |
+| `feature/*` | New features | Based on develop | feature/auth |
+| `hotfix` | Emergency fixes | x.y.z-hotfix.n | 1.2.2-hotfix.1 |
+
+## 📦 Version Management
+
+### Version Format Rules
+- Production (main): `1.2.3`
+- Development (develop): `1.2.3-beta.1`
+- QA: `1.2.3-qa.1`
+- UAT: `1.2.3-uat.1`
+- Hotfix: `1.2.3-hotfix.1`
+
+### Version Bump Rules
+| Change Type | Description | Version Increment | Example |
+|-------------|-------------|------------------|---------|
+| Major | Breaking changes | x+1.0.0 | 1.0.0 → 2.0.0 |
+| Minor | New features | x.y+1.0 | 1.0.0 → 1.1.0 |
+| Patch | Bug fixes | x.y.z+1 | 1.0.0 → 1.0.1 |
+
+## 👨‍💻 Development Workflow
+
+### 1. Starting New Feature
+```bash
+# Create feature branch
+git checkout develop
+git pull origin develop
+git checkout -b feature/new-feature
+
+# Make changes and commit
+git add .
+git commit -m "feat: add new authentication system"
+
+# Push changes
+git push origin feature/new-feature
+```
+
+### 2. Completing Feature
+```bash
+# Update develop
+git checkout develop
+git pull origin develop
+
+# Merge feature
+git merge feature/new-feature
+npm run release:beta
+
+# Push changes
+git push origin develop
+```
+
+### 3. QA Release
+```bash
+# Update QA
+git checkout qa
+git pull origin qa
+git merge develop
+npm run release:qa
+
+# Push changes
+git push origin qa
+```
+
+### 4. UAT Release
+```bash
+# Update UAT
+git checkout uat
+git pull origin uat
+git merge qa
+npm run release:uat
+
+# Push changes
+git push origin uat
+```
+
+### 5. Production Release
+```bash
+# Update main
+git checkout main
+git pull origin main
+git merge uat
+npm run release
+
+# Push changes
+git push origin main
+```
+
+## 📝 Commit Guidelines
+
+### Commit Message Format
+```
+type(scope): subject
+
+[optional body]
+[optional footer]
+```
+
+### Commit Types
+| Type | Description | Triggers Version Bump |
+|------|-------------|---------------------|
+| `feat` | New feature | Minor |
+| `fix` | Bug fix | Patch |
+| `docs` | Documentation | Patch |
+| `style` | Formatting | Patch |
+| `refactor` | Code restructuring | Patch |
+| `test` | Adding tests | Patch |
+| `chore` | Maintenance | Patch |
+| `BREAKING` | Breaking changes | Major |
+
+### Examples
+```bash
+# Feature
+git commit -m "feat(auth): add OAuth2 authentication"
+
+# Bug fix
+git commit -m "fix(api): handle null responses"
+
+# Breaking change
+git commit -m "feat(api)!: completely redesign authentication API
+BREAKING CHANGE: New API is not backward compatible"
+```
+
+## 🔄 Release Process
+
+### Standard Release Flow
+1. **Development (develop)**
+   ```bash
+   npm run release:beta   # 1.1.0-beta.1
+   ```
+
+2. **QA Testing (qa)**
+   ```bash
+   npm run release:qa     # 1.1.0-qa.1
+   ```
+
+3. **UAT Validation (uat)**
+   ```bash
+   npm run release:uat    # 1.1.0-uat.1
+   ```
+
+4. **Production (main)**
+   ```bash
+   npm run release        # 1.1.0
+   ```
+
+### Hotfix Process
+```bash
+# Create hotfix
+git checkout -b hotfix/critical-fix main
+
+# Fix and commit
+git commit -m "fix: resolve critical issue"
+
+# Release hotfix
+git checkout main
+git merge hotfix/critical-fix
+npm run release
+
+# Backport to develop
+git checkout develop
+git merge main
+npm run release:beta
+```
+
+## ⚠️ Troubleshooting
+
+### Common Issues and Solutions
+
+1. **Merge Conflicts**
+   ```bash
+   # Option 1: Keep their changes
+   git merge develop -X theirs
+   
+   # Option 2: Keep our changes
+   git merge develop -X ours
+   ```
+
+2. **Version Mismatch**
+   ```bash
+   # Check versions
+   git checkout develop && npm version
+   git checkout qa && npm version
+   git checkout uat && npm version
+   git checkout main && npm version
+   ```
+
+3. **Release Failure**
+   ```bash
+   # Clean and retry
+   git stash
+   npm run release:qa
+   git stash pop
+   ```
+
+### Pre-release Checklist
+- [ ] All tests passing
+- [ ] Code reviewed
+- [ ] Documentation updated
+- [ ] Changelog reviewed
+- [ ] Version numbers correct
+- [ ] Branch is clean
+- [ ] Dependencies updated
+
+### Post-release Checklist
+- [ ] Tags pushed
+- [ ] Release notes published
+- [ ] Deployment verified
+- [ ] Downstream branches updated
+- [ ] Stakeholders notified
+
+## 🔧 Behind The Scenes: Automation & Processes
+
+### 1. Semantic Release Process Flow
+```mermaid
+graph TD
+    A[Commit] --> B[Analyze Commits]
+    B --> C[Determine Version]
+    C --> D[Generate Changelog]
+    D --> E[Update package.json]
+    E --> F[Create Git Tag]
+    F --> G[Create GitHub Release]
+    G --> H[Push Changes]
+```
+
+### 2. Version Management Automation
+
+#### A. Version Calculation
+```javascript
+// Example of how versions are calculated
+currentVersion = "1.2.3"
+branch = "develop"
+
+// For feature on develop
+if (commitType === "feat") {
+  newVersion = "1.3.0-beta.1"  // Minor bump
+} else if (commitType === "fix") {
+  newVersion = "1.2.4-beta.1"  // Patch bump
 }
 ```
 
-## GitHub Token Setup
+#### B. Tag Creation Process
+```bash
+# 1. Version tag is created
+git tag -a v1.2.3 -m "Release v1.2.3"
 
-### Option 1: PowerShell Current Session (Temporary)
-```powershell
-$env:GITHUB_TOKEN = "your-github-token"
+# 2. Branch-specific tag
+git tag -a v1.2.3-beta.1 -m "Beta release v1.2.3-beta.1"
+
+# 3. Tags are pushed
+git push origin --tags
 ```
 
-### Option 2: PowerShell Permanent (User Environment Variable)
-```powershell
-[Environment]::SetEnvironmentVariable("GITHUB_TOKEN", "your-github-token", "User")
+### 3. Changelog Generation
+
+#### A. Commit Analysis
+```javascript
+// Commit message structure
+type(scope): subject
+
+// Examples analyzed:
+"feat(auth): add OAuth2"     // Minor bump
+"fix(api): handle nulls"     // Patch bump
+"feat!: new API"             // Major bump
 ```
 
-### Option 3: PowerShell Profile (Automatic on Session Start)
-1. Create/check profile existence:
-```powershell
-Test-Path $PROFILE
+#### B. Changelog Structure
+```markdown
+# [1.2.0](compare/v1.1.0...v1.2.0) (2024-02-01)
+
+### Features
+* add OAuth2 authentication (a5b2c3d)
+
+### Bug Fixes
+* handle null API responses (e4f3g2h)
 ```
 
-2. Create profile if it doesn't exist:
-```powershell
-New-Item -Path $PROFILE -Type File -Force
+### 4. Branch-Specific Processes
+
+#### A. Develop Branch
+```mermaid
+graph LR
+    A[Commit] --> B[Version Bump]
+    B --> C[Beta Tag]
+    C --> D[Changelog]
+    D --> E[Push]
 ```
 
-3. Add token to profile:
-```powershell
-Add-Content -Path $PROFILE -Value '$env:GITHUB_TOKEN = "your-github-token"'
+1. **Version Calculation**
+   ```javascript
+   // On develop branch
+   newVersion = `${nextVersion}-beta.${betaNumber}`
+   // Example: 1.2.0-beta.1
+   ```
+
+2. **Automated Steps**
+   ```bash
+   # 1. Update version
+   npm version 1.2.0-beta.1 --no-git-tag-version
+   
+   # 2. Update changelog
+   conventional-changelog -p angular -i CHANGELOG.md -s
+   
+   # 3. Create beta tag
+   git tag -a v1.2.0-beta.1
+   
+   # 4. Push changes
+   git push && git push --tags
+   ```
+
+#### B. QA Branch
+```mermaid
+graph LR
+    A[Merge from Develop] --> B[Version Bump]
+    B --> C[QA Tag]
+    C --> D[Changelog]
+    D --> E[Push]
 ```
 
-4. Reload profile:
-```powershell
-. $PROFILE
+1. **Version Calculation**
+   ```javascript
+   // On qa branch
+   newVersion = `${nextVersion}-qa.${qaNumber}`
+   // Example: 1.2.0-qa.1
+   ```
+
+2. **Automated Steps**
+   ```bash
+   # 1. Update version
+   npm version 1.2.0-qa.1 --no-git-tag-version
+   
+   # 2. Update changelog
+   conventional-changelog -p angular -i CHANGELOG.md -s
+   
+   # 3. Create qa tag
+   git tag -a v1.2.0-qa.1
+   
+   # 4. Push changes
+   git push && git push --tags
+   ```
+
+#### C. UAT Branch
+```mermaid
+graph LR
+    A[Merge from QA] --> B[Version Bump]
+    B --> C[UAT Tag]
+    C --> D[Changelog]
+    D --> E[Push]
 ```
 
-## Configuration
+1. **Version Calculation**
+   ```javascript
+   // On uat branch
+   newVersion = `${nextVersion}-uat.${uatNumber}`
+   // Example: 1.2.0-uat.1
+   ```
 
-1. Create release.config.js:
+2. **Automated Steps**
+   ```bash
+   # 1. Update version
+   npm version 1.2.0-uat.1 --no-git-tag-version
+   
+   # 2. Update changelog
+   conventional-changelog -p angular -i CHANGELOG.md -s
+   
+   # 3. Create uat tag
+   git tag -a v1.2.0-uat.1
+   
+   # 4. Push changes
+   git push && git push --tags
+   ```
+
+#### D. Main Branch
+```mermaid
+graph LR
+    A[Merge from UAT] --> B[Version Bump]
+    B --> C[Release Tag]
+    C --> D[Changelog]
+    D --> E[GitHub Release]
+```
+
+1. **Version Calculation**
+   ```javascript
+   // On main branch
+   newVersion = nextVersion
+   // Example: 1.2.0
+   ```
+
+2. **Automated Steps**
+   ```bash
+   # 1. Update version
+   npm version 1.2.0 --no-git-tag-version
+   
+   # 2. Update changelog
+   conventional-changelog -p angular -i CHANGELOG.md -s
+   
+   # 3. Create release tag
+   git tag -a v1.2.0
+   
+   # 4. Push changes
+   git push && git push --tags
+   
+   # 5. Create GitHub release
+   gh release create v1.2.0 --notes-file CHANGELOG.md
+   ```
+
+### 5. Release Notes Generation
+
+#### A. Components of Release Notes
+1. **Version Header**
+   ```markdown
+   # [1.2.0](compare/v1.1.0...v1.2.0) (2024-02-01)
+   ```
+
+2. **Feature Section**
+   ```markdown
+   ### Features
+   * **auth:** add OAuth2 authentication (#123)
+   * **api:** add new endpoints (#124)
+   ```
+
+3. **Fixes Section**
+   ```markdown
+   ### Bug Fixes
+   * **api:** handle null responses (#125)
+   * **ui:** fix button alignment (#126)
+   ```
+
+4. **Breaking Changes**
+   ```markdown
+   ### BREAKING CHANGES
+   * **api:** complete redesign of authentication system
+   ```
+
+#### B. Automated Release Notes Process
+```mermaid
+graph TD
+    A[Analyze Commits] --> B[Group by Type]
+    B --> C[Generate Markdown]
+    C --> D[Update CHANGELOG.md]
+    D --> E[Create Release]
+```
+
+### 6. Configuration Files
+
+#### A. release.config.js
 ```javascript
 module.exports = {
   branches: [
     'main',
-    { name: 'dev', channel: 'beta', prerelease: 'beta' },
-    { name: 'qa', channel: 'qa', prerelease: 'qa' },
-    { name: 'uat', channel: 'uat', prerelease: 'uat' },
-    { name: 'hotfix', prerelease: 'hotfix' }
+    { name: 'develop', prerelease: 'beta' },
+    { name: 'qa', prerelease: 'qa' },
+    { name: 'uat', prerelease: 'uat' }
   ],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
-    ['@semantic-release/npm', { npmPublish: false }],
-    '@semantic-release/github',
-    ['@semantic-release/git', {
-      assets: ['package.json', 'CHANGELOG.md', 'dist/**/*.{js,css}'],
-      message: 'chore(release): 🔖 ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}'
-    }]
+    '@semantic-release/npm',
+    '@semantic-release/git',
+    '@semantic-release/github'
   ]
 }
 ```
 
-## Usage
+#### B. .releaserc
+```json
+{
+  "plugins": [
+    ["@semantic-release/commit-analyzer", {
+      "preset": "angular",
+      "releaseRules": [
+        {"type": "feat", "release": "minor"},
+        {"type": "fix", "release": "patch"},
+        {"type": "docs", "release": "patch"},
+        {"breaking": true, "release": "major"}
+      ]
+    }],
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    "@semantic-release/git",
+    "@semantic-release/github"
+  ]
+}
+```
 
-### Making Changes and Committing
+## 🔄 End-to-End Process: Development to Client Deployment
 
-1. Make your changes to the code
+### 1. Complete Development Lifecycle
+```mermaid
+graph TD
+    subgraph "1. Development Environment"
+        A[Developer] -->|Code| B[Feature Branch]
+        B -->|Build & Test| C[Local Testing]
+        C -->|PR| D[Code Review]
+        D -->|Merge| E[develop branch]
+        E -->|npm run release:beta| F[Beta Release]
+    end
 
-2. Stage your changes:
+    subgraph "2. Build & Test"
+        F -->|Automated Tests| G[Unit Tests]
+        G -->|Integration| H[E2E Tests]
+        H -->|Build| I[Development Build]
+        I -->|Deploy| J[Dev Environment]
+    end
+
+    subgraph "3. QA Process"
+        J -->|QA Merge| K[qa branch]
+        K -->|npm run release:qa| L[QA Build]
+        L -->|Deploy| M[QA Environment]
+        M -->|Testing| N{QA Approval}
+    end
+
+    subgraph "4. UAT Validation"
+        N -->|Pass| O[uat branch]
+        O -->|npm run release:uat| P[UAT Build]
+        P -->|Deploy| Q[UAT Environment]
+        Q -->|Client Testing| R{UAT Approval}
+    end
+
+    subgraph "5. Production Release"
+        R -->|Pass| S[main branch]
+        S -->|npm run release| T[Production Build]
+        T -->|Deploy| U[Production]
+        U -->|Monitor| V[Production Monitoring]
+    end
+```
+
+### 2. Build Process for Each Environment
+
+#### A. Development Build
 ```bash
-git add .
+# 1. Install dependencies
+npm install
+
+# 2. Run tests
+npm run test
+
+# 3. Build for development
+npm run build:dev
+
+# 4. Create development artifacts
+├── dist/
+│   ├── assets/
+│   ├── index.html
+│   └── main.js
 ```
 
-3. Commit using commitizen:
+#### B. QA Build
 ```bash
-npm run commit
+# 1. QA environment setup
+npm run build:qa
+
+# 2. QA specific configurations
+├── dist-qa/
+│   ├── assets/
+│   ├── index.html
+│   └── main.js
 ```
 
-4. Follow the prompts to create a conventional commit:
-   - Choose type (feat, fix, docs, etc.)
-   - Enter scope (optional)
-   - Write short description
-   - Write longer description (optional)
-   - Indicate breaking changes (if any)
-   - Reference issues (if any)
-
-### Creating a Release
-
-Run semantic-release:
+#### C. UAT Build
 ```bash
-npx semantic-release
+# 1. UAT environment setup
+npm run build:uat
+
+# 2. UAT specific configurations
+├── dist-uat/
+│   ├── assets/
+│   ├── index.html
+│   └── main.js
 ```
 
-## Commit Message Format
-
-Follow the Conventional Commits specification:
-
-```
-<type>(<scope>): <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-Types:
-- `feat`: New feature (minor version)
-- `fix`: Bug fix (patch version)
-- `docs`: Documentation changes
-- `style`: Code style changes (formatting, etc.)
-- `refactor`: Code refactoring
-- `perf`: Performance improvements
-- `test`: Adding or updating tests
-- `build`: Build system changes
-- `ci`: CI configuration changes
-- `chore`: Other changes
-
-Examples:
-```
-feat(auth): add user authentication system
-
-fix(api): correct response status code for invalid requests
-
-docs(readme): update installation instructions
-```
-
-## Release Process
-
-1. semantic-release will:
-   - Analyze commits since last release
-   - Determine version bump (major, minor, patch)
-   - Generate changelog
-   - Create GitHub release
-   - Create Git tag
-   - Update package.json version
-
-2. The release will be visible:
-   - In CHANGELOG.md
-   - On GitHub Releases page
-   - In Git tags
-   - In package.json version
-
-## Troubleshooting
-
-### Common Issues
-
-1. Token Issues:
+#### D. Production Build
 ```bash
-# Verify token is set
-echo $env:GITHUB_TOKEN
+# 1. Production optimization
+npm run build:prod
 
-# Reset token if needed
-$env:GITHUB_TOKEN = "new-token"
+# 2. Production artifacts
+├── dist-prod/
+│   ├── assets/
+│   ├── index.html
+│   └── main.js
 ```
 
-2. Commit Hook Issues:
-```bash
-# Reinstall husky hooks
-npm run prepare
+### 3. Deployment Process
+
+#### A. Environment Configuration
+```javascript
+// .env.development
+VITE_API_URL=https://dev-api.example.com
+VITE_APP_ENV=development
+
+// .env.qa
+VITE_API_URL=https://qa-api.example.com
+VITE_APP_ENV=qa
+
+// .env.uat
+VITE_API_URL=https://uat-api.example.com
+VITE_APP_ENV=uat
+
+// .env.production
+VITE_API_URL=https://api.example.com
+VITE_APP_ENV=production
 ```
 
-3. Dry Run Test:
-```bash
-npx semantic-release --dry-run
+#### B. Deployment Checklist
+```markdown
+### Pre-deployment
+- [ ] All tests passing
+- [ ] Build successful
+- [ ] Environment variables set
+- [ ] Database migrations ready
+- [ ] API endpoints configured
+
+### During deployment
+- [ ] Database backup
+- [ ] Zero-downtime deployment
+- [ ] SSL certificates valid
+- [ ] CDN cache cleared
+- [ ] DNS settings verified
+
+### Post-deployment
+- [ ] Health checks passing
+- [ ] Monitoring active
+- [ ] Logs streaming
+- [ ] Performance metrics normal
+- [ ] User access verified
 ```
 
-## Version Management
+### 4. Client Delivery Process
 
-### Example Versioning Flow
+#### A. Documentation Package
+```markdown
+### Release Package Contents
+1. Release Notes
+   - New features
+   - Bug fixes
+   - Breaking changes
+   - Known issues
 
-Here's how versions progress through different branches:
+2. Installation Guide
+   - System requirements
+   - Setup instructions
+   - Configuration steps
 
+3. User Guide
+   - Feature documentation
+   - Usage examples
+   - Best practices
+
+4. API Documentation
+   - Endpoint changes
+   - Request/Response examples
+   - Authentication updates
+```
+
+#### B. Client Communication
+```markdown
+### Release Communication Timeline
+1. Pre-release Notice (1 week before)
+   - Release date
+   - Feature summary
+   - Required actions
+
+2. Release Day
+   - Deployment schedule
+   - Downtime notice
+   - Emergency contacts
+```
+
+### 5. Monitoring & Support
+
+#### A. Health Monitoring
+```mermaid
+graph LR
+    A[Application] -->|Metrics| B[Monitoring System]
+    B -->|Alerts| C[DevOps Team]
+    C -->|Response| D[Issue Resolution]
+    D -->|Update| E[Client Communication]
+```
+
+#### B. Support Levels
+```markdown
+### Support Tiers
+1. L1 - Basic Support
+   - User access issues
+   - Basic functionality
+   - General queries
+
+2. L2 - Technical Support
+   - Complex issues
+   - Performance problems
+   - Integration issues
+
+3. L3 - Expert Support
+   - Critical bugs
+   - Security issues
+   - Architecture problems
+```
+
+### 6. Rollback Procedures
+
+#### A. Quick Rollback Process
 ```bash
-# On dev branch (Development)
-git checkout dev
-git commit -m "feat: new feature"
-# Creates: 1.0.0-beta.1
-
-# On qa branch (Quality Assurance)
-git checkout qa
-git merge dev
-# Creates: 1.0.0-qa.1
-
-# On uat branch (User Acceptance Testing)
-git checkout uat
-git merge qa
-# Creates: 1.0.0-uat.1
-
-# On main branch (Production)
+# 1. Revert to previous version
 git checkout main
-git merge uat
-# Creates: 1.0.0
+git revert HEAD
+npm run release
 
-# On hotfix branch (Emergency Fixes)
-git checkout hotfix
-git commit -m "fix: critical bug"
-# Creates: 1.0.1-hotfix.1
+# 2. Deploy previous version
+npm run build:prod
+npm run deploy:prod
+
+# 3. Verify rollback
+npm run health-check
 ```
 
-### Commit Types and Version Updates
+#### B. Data Recovery
+```markdown
+### Recovery Steps
+1. Database Rollback
+   - Restore backup
+   - Verify data integrity
+   - Check relationships
 
-The following commit types will trigger version updates:
+2. File System Recovery
+   - Restore assets
+   - Check permissions
+   - Verify access
 
-| Commit Type | Description                | Version Bump | Example                |
-|------------|----------------------------|--------------|------------------------|
-| `feat`     | New feature                | Minor        | 1.0.0 -> 1.1.0        |
-| `fix`      | Bug fix                    | Patch        | 1.0.0 -> 1.0.1        |
-| `perf`     | Performance improvement    | Patch        | 1.0.0 -> 1.0.1        |
-| `docs`     | Documentation changes      | Patch        | 1.0.0 -> 1.0.1        |
-| `style`    | Code style changes         | Patch        | 1.0.0 -> 1.0.1        |
-| `refactor` | Code refactoring           | Patch        | 1.0.0 -> 1.0.1        |
-| `test`     | Adding/updating tests      | Patch        | 1.0.0 -> 1.0.1        |
-| `build`    | Build system changes       | Patch        | 1.0.0 -> 1.0.1        |
-| `ci`       | CI configuration changes   | Patch        | 1.0.0 -> 1.0.1        |
-| `revert`   | Reverting changes          | Patch        | 1.0.0 -> 1.0.1        |
-| `BREAKING` | Breaking changes           | Major        | 1.0.0 -> 2.0.0        |
-
-### Environment-Specific Versions
-
-Each environment has its own version format:
-
-| Environment        | Branch  | Version Format    | Example        |
-|-------------------|---------|-------------------|----------------|
-| Production        | main    | x.y.z            | 1.0.0          |
-| Development       | dev     | x.y.z-beta.n     | 1.0.0-beta.1   |
-| QA               | qa      | x.y.z-qa.n       | 1.0.0-qa.1     |
-| UAT              | uat     | x.y.z-uat.n      | 1.0.0-uat.1    |
-| Hotfix           | hotfix  | x.y.z-hotfix.n   | 1.0.1-hotfix.1 |
-
-### Breaking Changes
-
-To create a breaking change that triggers a major version bump:
-
-```bash
-git commit -m "feat: new authentication system
-BREAKING CHANGE: New authentication system is not backward compatible with previous versions"
-# This will trigger a major version bump (1.0.0 -> 2.0.0)
+3. Configuration Reset
+   - Environment variables
+   - API endpoints
+   - Cache clearing
 ```
-
-### Version Inheritance Flow
-
-The typical version progression through environments:
-
-1. Development (dev):
-   ```bash
-   git checkout dev
-   git commit -m "feat: new feature"
-   # Creates: 1.0.0-beta.1
-   ```
-
-2. Quality Assurance (qa):
-   ```bash
-   git checkout qa
-   git merge dev
-   # Creates: 1.0.0-qa.1
-   ```
-
-3. User Acceptance Testing (uat):
-   ```bash
-   git checkout uat
-   git merge qa
-   # Creates: 1.0.0-uat.1
-   ```
-
-4. Production (main):
-   ```bash
-   git checkout main
-   git merge uat
-   # Creates: 1.0.0
-   ```
-
-### Hotfix Process
-
-For emergency fixes:
-
-1. Create hotfix:
-   ```bash
-   git checkout hotfix
-   git commit -m "fix: critical security issue"
-   # Creates: 1.0.1-hotfix.1
-   ```
-
-2. After testing, merge to main:
-   ```bash
-   git checkout main
-   git merge hotfix
-   # Creates: 1.0.1
-   ```
-
-3. Sync back to other environments:
-   ```bash
-   git checkout dev
-   git merge main
-   # Updates dev with the hotfix
-   ```
-
-### Version Files and Artifacts
-
-After each release, the following will be updated:
-
-1. `package.json` - Version number updated
-2. `CHANGELOG.md` - Release notes added
-3. Git tag created (e.g., v1.0.0)
-4. GitHub release created
-5. Release artifacts generated in 'dist' directory
-
-### Troubleshooting Version Issues
-
-1. Check current version:
-   ```bash
-   npm version
-   # or
-   cat package.json | grep version
-   ```
-
-2. List all tags:
-   ```bash
-   git tag --list
-   ```
-
-3. View version history:
-   ```bash
-   git log --pretty=format:"%h %d %s" --graph
-   ```
