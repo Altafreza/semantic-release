@@ -15,11 +15,11 @@
     "build:qa": "vite build --mode qa",
     "build:uat": "vite build --mode uat",
     "build:prod": "vite build --mode production",
-    "release": "semantic-release",
+    "release": "semantic-release --no-ci",
     "release:beta": "semantic-release --no-ci --branches develop",
     "release:qa": "semantic-release --no-ci --branches qa",
     "release:uat": "semantic-release --no-ci --branches uat",
-    "release:hotfix": "semantic-release --no-ci --branches hotfix --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator,@semantic-release/changelog,@semantic-release/npm,@semantic-release/git"
+    "release:hotfix": "semantic-release --no-ci --branches hotfix"
   },
   "dependencies": {
     "react": "^18.3.1",
