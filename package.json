@@ -1,10 +1,6 @@
 {
   "name": "semantic-release",
   "private": true,
-<<<<<<< HEAD
-=======
-  "version": "1.0.0",
->>>>>>> develop
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,11 +19,7 @@
     "release:beta": "semantic-release --no-ci --branches develop",
     "release:qa": "semantic-release --no-ci --branches qa",
     "release:uat": "semantic-release --no-ci --branches uat",
-<<<<<<< HEAD
     "release:hotfix": "semantic-release --no-ci --branches hotfix --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator,@semantic-release/changelog,@semantic-release/npm,@semantic-release/git"
-=======
-    "release:hotfix": "semantic-release --no-ci --branches hotfix"
->>>>>>> develop
   },
   "dependencies": {
     "react": "^18.3.1",
