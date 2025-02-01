@@ -1,9 +1,9 @@
-## [1.1.1](https://github.com/Altafreza/semantic-release/compare/1.1.0...1.1.1) (2025-02-01)
+# [1.2.0](https://github.com/Altafreza/semantic-release/compare/1.1.0...1.2.0) (2025-02-01)
 
 
-### Bug Fixes
+### Features
 
-* update semantic-release configuration with proper tag format ([979ddb1](https://github.com/Altafreza/semantic-release/commit/979ddb1b77a6821cb89886a2448f5b52bdd47127))
+* add cypress watch mode for interactive testing ([e329eb3](https://github.com/Altafreza/semantic-release/commit/e329eb378ec5d2b19b498e361c2503c4b3e080cf))
 
 # [1.1.0](https://github.com/Altafreza/semantic-release/compare/1.0.2...1.1.0) (2025-02-01)
 

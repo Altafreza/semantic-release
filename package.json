@@ -2,7 +2,7 @@
   "name": "semantic-release",
   "private": true,
   "type": "module",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -22,7 +22,8 @@
     "release:qa": "semantic-release --no-ci --branches qa",
     "release:uat": "semantic-release --no-ci --branches uat",
     "release:hotfix": "semantic-release --no-ci --branches hotfix",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "test:watch": "cypress open"
   },
   "dependencies": {
     "react": "^18.3.1",
