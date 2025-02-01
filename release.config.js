@@ -50,7 +50,8 @@ export default {
         "failTitle": "❌ Release Failed",
         "labels": ["released"],
         "addReleases": "bottom",
-        "releasedLabels": ["released"]
+        "releasedLabels": ["released"],
+        "successTitle": "🎉 Release Successful",
       }],
       ["@semantic-release/git", {
         "assets": ["package.json", "CHANGELOG.md", "dist/**/*.{js,css}"],
