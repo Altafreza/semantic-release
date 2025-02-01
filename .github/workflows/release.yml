@@ -1,0 +1,78 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - qa
+      - uat
+      - hotfix
+  pull_request:
+    branches:
+      - main
+      - dev
+      - qa
+      - uat
+      - hotfix
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify the integrity of provenance attestations and registry signatures
+        run: npm audit signatures
+
+      - name: Build
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          if [ "$BRANCH_NAME" = "main" ]; then
+            npm run build:prod
+          elif [ "$BRANCH_NAME" = "dev" ]; then
+            npm run build:dev
+          elif [ "$BRANCH_NAME" = "qa" ]; then
+            npm run build:qa
+          elif [ "$BRANCH_NAME" = "uat" ]; then
+            npm run build:uat
+          elif [ "$BRANCH_NAME" = "hotfix" ]; then
+            npm run build:prod
+          else
+            npm run build:dev
+          fi
+        env:
+          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || contains(github.ref, 'refs/heads/qa') && 'qa' || contains(github.ref, 'refs/heads/uat') && 'uat' || 'development' }}
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          NODE_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || contains(github.ref, 'refs/heads/qa') && 'qa' || contains(github.ref, 'refs/heads/uat') && 'uat' || 'development' }}
+        run: npx semantic-release

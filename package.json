@@ -13,9 +13,10 @@
     "start:uat": "vite --mode uat",
     "start:prod": "vite --mode production",
     "release": "semantic-release",
-    "release:dev": "semantic-release --no-ci --branches dev",
+    "release:beta": "semantic-release --no-ci --branches develop",
     "release:qa": "semantic-release --no-ci --branches qa",
-    "release:uat": "semantic-release --no-ci --branches uat"
+    "release:uat": "semantic-release --no-ci --branches uat",
+    "release:hotfix": "semantic-release --no-ci --branches hotfix"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -38,5 +39,8 @@
     "globals": "^15.14.0",
     "semantic-release": "^24.2.1",
     "vite": "^6.0.5"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
