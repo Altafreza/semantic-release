@@ -1,262 +1,196 @@
-# Semantic Release Project
+# Semantic Release Setup Guide
 
-This project uses semantic-release for automated versioning and releases.
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [GitHub Token Setup](#github-token-setup)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Commit Message Format](#commit-message-format)
 
-## Semantic Release and Versioning
+## Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Git
+- GitHub account
 
-This project uses [semantic-release](https://github.com/semantic-release/semantic-release) to automatically determine the next version number, generate a changelog, create a Git tag, and publish a GitHub release based on the commit messages and the branch being pushed.
+## Installation
 
-The versioning and release process is fully automated based on the commit messages and the branch strategy. Semantic-release uses the [Conventional Commits](https://www.conventionalcommits.org/) specification to determine the type of changes in the codebase and bump the version number accordingly.
+1. Install dependencies:
+```bash
+npm install --save-dev semantic-release @semantic-release/git @semantic-release/github @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator commitizen cz-conventional-changelog husky @commitlint/cli @commitlint/config-conventional
+```
 
-## Setup
+2. Add scripts to package.json:
+```json
+{
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "prepare": "husky install",
+    "commit": "git-cz"
+  }
+}
+```
 
-### Installing semantic-release
+## GitHub Token Setup
 
-1. Create an NPM token and save it as a GitHub secret named `NPM_TOKEN`.
-2. Install semantic-release-cli:
-   ```bash
-   npm i -D semantic-release-cli
-   ```
-3. Run the setup command:
-   ```bash
-   semantic-release-cli setup --npm-username={npmUserName} --npm-token={npmToken} --gh-token={githubToken}
-   ```
-4. Commit the current changes. The next step requires `package.json` to be free of any changes.
-5. Set the initial version to `0.0.0-semantically-released`:
-   ```bash
-   npm version '0.0.0-semantically-released'
-   ```
+### Option 1: PowerShell Current Session (Temporary)
+```powershell
+$env:GITHUB_TOKEN = "your-github-token"
+```
 
-### Configuring release branches
+### Option 2: PowerShell Permanent (User Environment Variable)
+```powershell
+[Environment]::SetEnvironmentVariable("GITHUB_TOKEN", "your-github-token", "User")
+```
 
-Create a `release.config.js` file in the root directory to override the default tag deployment:
+### Option 3: PowerShell Profile (Automatic on Session Start)
+1. Create/check profile existence:
+```powershell
+Test-Path $PROFILE
+```
 
-```js
+2. Create profile if it doesn't exist:
+```powershell
+New-Item -Path $PROFILE -Type File -Force
+```
+
+3. Add token to profile:
+```powershell
+Add-Content -Path $PROFILE -Value '$env:GITHUB_TOKEN = "your-github-token"'
+```
+
+4. Reload profile:
+```powershell
+. $PROFILE
+```
+
+## Configuration
+
+1. Create release.config.js:
+```javascript
 module.exports = {
-  branches: ['main'],
-};
+  branches: [
+    'main',
+    { name: 'dev', channel: 'beta', prerelease: 'beta' },
+    { name: 'qa', channel: 'qa', prerelease: 'qa' },
+    { name: 'uat', channel: 'uat', prerelease: 'uat' },
+    { name: 'hotfix', prerelease: 'hotfix' }
+  ],
+  plugins: [
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
+    '@semantic-release/changelog',
+    ['@semantic-release/npm', { npmPublish: false }],
+    '@semantic-release/github',
+    ['@semantic-release/git', {
+      assets: ['package.json', 'CHANGELOG.md', 'dist/**/*.{js,css}'],
+      message: 'chore(release): 🔖 ${nextRelease.version} [skip ci]\\n\\n${nextRelease.notes}'
+    }]
+  ]
+}
 ```
 
-### Setting up Husky
+## Usage
 
-1. Install Husky:
-   ```bash
-   npm i -D husky
-   ```
-2. Create a prepare script that installs Husky:
-   ```bash
-   npm set-script prepare "husky install"
-   ```
-3. Run the prepare script:
-   ```bash
-   npm run prepare
-   ```
+### Making Changes and Committing
 
-### Setting up commitizen
+1. Make your changes to the code
 
-1. Install commitizen and the conventional changelog adapter:
-   ```bash
-   npm i -D commitizen cz-conventional-changelog
-   ```
-2. Initialize commitizen:
-   ```bash
-   commitizen init cz-conventional-changelog
-   ```
-3. Set up a pre-commit hook:
-   ```bash
-   npm set-script pre-commit "exec < /dev/tty && git cz --hook || true\n"
-   npx husky add .husky/pre-commit "npm run pre-commit" && git add .husky/pre-commit
-   ```
-
-### Setting up commitlint
-
-1. Install commitlint and the conventional config:
-   ```bash
-   npm i -D @commitlint/{cli,config-conventional}
-   ```
-2. Set up a commit-msg hook:
-   ```bash
-   npm set-script commit-msg "npx --no-install commitlint --edit $1"
-   npx husky add .husky/commit-msg "npm run commit-msg" && git add .husky/commit-msg
-   ```
-3. Create a `commitlint.config.js` file in the root directory:
-   ```js
-   module.exports = {
-     extends: ['@commitlint/config-conventional'],
-   };
-   ```
-
-### Setting up GitHub Actions
-
-Create a `.github/workflows/npm-release.yml` file with the following content:
-
-```yaml
-name: npm-release
-on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-      - name: Install dependencies
-        run: npm ci
-      - name: Release
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+2. Stage your changes:
+```bash
+git add .
 ```
 
-This GitHub Actions workflow is configured to run manually or with each push to the `main` branch.
+3. Commit using commitizen:
+```bash
+npm run commit
+```
 
-## Commit Guidelines
+4. Follow the prompts to create a conventional commit:
+   - Choose type (feat, fix, docs, etc.)
+   - Enter scope (optional)
+   - Write short description
+   - Write longer description (optional)
+   - Indicate breaking changes (if any)
+   - Reference issues (if any)
 
-This project follows [Conventional Commits](https://www.conventionalcommits.org/). Commit messages should be structured as follows:
+### Creating a Release
+
+Run semantic-release:
+```bash
+npx semantic-release
+```
+
+## Commit Message Format
+
+Follow the Conventional Commits specification:
 
 ```
-<type>[optional scope]: <description>
+<type>(<scope>): <description>
 
 [optional body]
 
 [optional footer(s)]
 ```
 
-The `<type>` must be one of the following:
-
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Documentation only changes
-- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- `refactor`: A code change that neither fixes a bug nor adds a feature
-- `perf`: A code change that improves performance
-- `test`: Adding missing or correcting existing tests
-- `build`: Changes to the build system or external dependencies
-- `ci`: Changes to the CI configuration files and scripts
-- `chore`: Other changes that don't modify src or test files
+Types:
+- `feat`: New feature (minor version)
+- `fix`: Bug fix (patch version)
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code refactoring
+- `perf`: Performance improvements
+- `test`: Adding or updating tests
+- `build`: Build system changes
+- `ci`: CI configuration changes
+- `chore`: Other changes
 
 Examples:
 ```
-feat: add new endpoint for user registration
-fix: handle null values in search function
-docs: update README with new installation instructions
+feat(auth): add user authentication system
+
+fix(api): correct response status code for invalid requests
+
+docs(readme): update installation instructions
 ```
 
-Breaking changes should include a `BREAKING CHANGE:` footer, followed by a description of the change and migration notes.
+## Release Process
 
-## Branch Strategy
+1. semantic-release will:
+   - Analyze commits since last release
+   - Determine version bump (major, minor, patch)
+   - Generate changelog
+   - Create GitHub release
+   - Create Git tag
+   - Update package.json version
 
-- `main`: Production releases. Commits to this branch will trigger a new release with an incremented version number based on the commit messages.
-- `dev`: Development (beta) releases. Commits to this branch will trigger a new pre-release with an incremented version number and a `beta` tag.
-- `qa`: QA testing releases. Commits to this branch will trigger a new pre-release with an incremented version number and a `qa` tag.
-- `uat`: UAT testing releases. Commits to this branch will trigger a new pre-release with an incremented version number and a `uat` tag.
-- `hotfix`: Hotfix releases. Commits to this branch will trigger a new patch release with an incremented version number.
+2. The release will be visible:
+   - In CHANGELOG.md
+   - On GitHub Releases page
+   - In Git tags
+   - In package.json version
 
-## Triggering a Release
+## Troubleshooting
 
-To trigger a release, simply push commits to one of the release branches (`main`, `dev`, `qa`, `uat`, or `hotfix`). Semantic-release will automatically analyze the commit messages, determine the appropriate version bump, and create a new release with a changelog and Git tag.
+### Common Issues
 
-## Environment Variables
-
-Each environment has its own `.env` file:
-- `.env.dev` - Development
-- `.env.qa` - QA
-- `.env.uat` - UAT
-- `.env.prod` - Production
-
-## Available Scripts
-
-### Development
+1. Token Issues:
 ```bash
-# Start development server
-npm run start:dev
+# Verify token is set
+echo $env:GITHUB_TOKEN
 
-# Build for development
-npm run build:dev
+# Reset token if needed
+$env:GITHUB_TOKEN = "new-token"
 ```
 
-### QA
+2. Commit Hook Issues:
 ```bash
-# Start QA server
-npm run start:qa
-
-# Build for QA
-npm run build:qa
+# Reinstall husky hooks
+npm run prepare
 ```
 
-### UAT
+3. Dry Run Test:
 ```bash
-# Start UAT server
-npm run start:uat
-
-# Build for UAT
-npm run build:uat
+npx semantic-release --dry-run
 ```
-
-### Production
-```bash
-# Start production server
-npm run start:prod
-
-# Build for production
-npm run build:prod
-```
-
-## Building, Committing, and Releasing
-
-To build the project for a specific environment, run the corresponding build command:
-
-```bash
-# Build for development
-npm run build:dev
-
-# Build for QA
-npm run build:qa
-
-# Build for UAT
-npm run build:uat
-
-# Build for production
-npm run build:prod
-```
-
-To create a commit, use the `git cz` command provided by commitizen:
-
-```bash
-git cz
-```
-
-Follow the prompts to select the type of change, scope, description, and other details for your commit message.
-
-After committing your changes, push them to the appropriate release branch to trigger the semantic-release workflow:
-
-```bash
-git push origin main
-```
-
-Semantic-release will analyze the commit messages, determine the version bump, generate a changelog, create a Git tag, and publish a GitHub release.
-
-## Plugins
-
-Semantic-release plugins are available for various IDEs to help with commit message formatting and adherence to the Conventional Commits specification:
-
-- WebStorm
-- VSCode
-- Visual Studio
-
-## Logs
-
-Semantic-release generates detailed logs during the release process. You can view these logs in the GitHub Actions workflow run for each release.
-
-The logs include information about the commits analyzed, the version bump determined, the changelog generated, and the Git tag and GitHub release created.
-
-To view the logs, navigate to the "Actions" tab in your GitHub repository, select the workflow run for the release, and expand the "Release" step.
-
-## Learn More
-
-For more information on how semantic-release works and its configuration options, refer to the [semantic-release documentation](https://semantic-release.gitbook.io/semantic-release/).
