@@ -23,7 +23,7 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">asnew semantic releases</p>
+      <p className="read-the-docs">sssssssssss semantic releases</p>
     </>
   );
 }
