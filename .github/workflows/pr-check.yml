@@ -1,0 +1,39 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+      - qa
+      - uat
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Lint
+        run: npm run lint
+      
+      - name: Build
+        run: |
+          if [[ "${{ github.base_ref }}" == "main" ]]; then
+            npm run build:prod
+          elif [[ "${{ github.base_ref }}" == "dev" ]]; then
+            npm run build:dev
+          elif [[ "${{ github.base_ref }}" == "qa" ]]; then
+            npm run build:qa
+          elif [[ "${{ github.base_ref }}" == "uat" ]]; then
+            npm run build:uat
+          else
+            npm run build:dev
+          fi
