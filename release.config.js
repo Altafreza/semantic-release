@@ -49,8 +49,7 @@ export default {
     }],
     ['@semantic-release/npm', {
       npmPublish: false,
-      pkgRoot: '.',
-      tarballDir: false
+      pkgRoot: '.'
     }],
     ['@semantic-release/git', {
       assets: ['package.json', 'CHANGELOG.md'],
