@@ -2,14 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 export default {
-  preset: 'angular',
-  branches: [
-    'main',
-    { name: 'beta', channel: 'beta', prerelease: true },
-    { name: 'qa', prerelease: 'qa' },
-    { name: 'uat', prerelease: 'uat' },
-    { name: 'hotfix/*', prerelease: '${name.replace(/^hotfix\\//, "")}' }
-  ],
+  branches: ['main'],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
