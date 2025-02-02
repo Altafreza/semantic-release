@@ -1,25 +1,30 @@
 export default {
   branches: [
-    'main',  // Production Stable Release
+    '+([0-9])?(.{+([0-9]),x}).x',
+    'main',
     {
       name: 'develop',
+      prerelease: 'beta',
       channel: 'beta',
-      prerelease: 'beta'  // Will create versions like 1.0.0-beta.1
+      prereleaseSuffix: 'beta'
     },
     {
       name: 'qa',
+      prerelease: 'qa',
       channel: 'qa',
-      prerelease: 'qa'  // Will create versions like 1.0.0-qa.1
+      prereleaseSuffix: 'qa'
     },
     {
       name: 'uat',
+      prerelease: 'uat',
       channel: 'uat',
-      prerelease: 'uat'  // Will create versions like 1.0.0-uat.1
+      prereleaseSuffix: 'uat'
     },
     {
       name: 'hotfix',
+      prerelease: 'hotfix',
       channel: 'hotfix',
-      prerelease: 'hotfix' // Will create versions like 1.0.1-hotfix.1
+      prereleaseSuffix: 'hotfix'
     }
   ],
   plugins: [
@@ -35,9 +40,11 @@ export default {
         { type: 'test', release: 'patch' },
         { type: 'build', release: 'patch' },
         { type: 'ci', release: 'patch' },
-        { breaking: true, release: 'major' },
-        { type: 'revert', release: 'patch' }
-      ]
+        { breaking: true, release: 'major' }
+      ],
+      parserOpts: {
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES']
+      }
     }],
     '@semantic-release/release-notes-generator',
     ['@semantic-release/changelog', {
@@ -46,12 +53,47 @@ export default {
     }],
     ['@semantic-release/npm', {
       npmPublish: false,
-      pkgRoot: '.'
+      tarballDir: 'dist'
     }],
     ['@semantic-release/git', {
       assets: ['package.json', 'package-lock.json', 'CHANGELOG.md'],
       message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
+    }],
+    ['@semantic-release/github', {
+      assets: 'dist/*.tgz'
     }]
   ],
-  tagFormat: '${version}'
+  // Custom configuration for version inheritance
+  tagFormat: '${version}',
+  preset: 'angular',
+  gitflow: true,
+  // Version inheritance rules
+  versionInheritance: {
+    develop: 'main',
+    qa: 'develop',
+    uat: 'qa',
+    hotfix: 'main'
+  },
+  // Version format by branch
+  versionFormat: {
+    develop: '${version}-beta.${prerelease}',
+    qa: '${version}-qa.${prerelease}',
+    uat: '${version}-uat.${prerelease}',
+    hotfix: '${version}-hotfix.${prerelease}'
+  },
+  // Success hooks for version propagation
+  success: [
+    '@semantic-release/github',
+    {
+      successFile: '.version',
+      assets: ['CHANGELOG.md', 'package.json']
+    }
+  ],
+  // Fail hooks for rollback
+  fail: [
+    '@semantic-release/github',
+    {
+      failComment: true
+    }
+  ]
 }
