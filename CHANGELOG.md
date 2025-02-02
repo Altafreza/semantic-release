@@ -1,3 +1,13 @@
+## [1.5.8](https://github.com/Altafreza/semantic-release/compare/1.5.7...1.5.8) (2025-02-02)
+
+
+### Bug Fixes
+
+* simplify release scripts and remove custom tag format ([ec28f79](https://github.com/Altafreza/semantic-release/commit/ec28f794c43d0b6b1a5efaec044a54e8dec718e8))
+* simplify tag format in release scripts ([cf74dcd](https://github.com/Altafreza/semantic-release/commit/cf74dcd81e37b56fd8103ff1e2c04000ccae844a))
+* update release scripts with custom tag format ([553d857](https://github.com/Altafreza/semantic-release/commit/553d857f77ff72a4ae8e135eb7ec5f4e6f632cb6))
+* update release scripts with prerelease and tag format ([ca0cf50](https://github.com/Altafreza/semantic-release/commit/ca0cf507aa3cf7147024f02062b0abd1f5c9e9d7))
+
 # 1.0.0 (2025-02-02)
 
 
