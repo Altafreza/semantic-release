@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/Altafreza/semantic-release/compare/v1.0.6...v1.0.7) (2025-02-02)
+
+
+### Bug Fixes
+
+* simplify release configuration and use CLI arguments for prerelease ([4d57086](https://github.com/Altafreza/semantic-release/commit/4d5708617fb810ca7ea55bbe1d193376a87c34cf))
+* update branch configuration for correct version formats ([e08f2c2](https://github.com/Altafreza/semantic-release/commit/e08f2c239cbd1f6cc9e28bd63be0728146d3b6bf))
+
 ## [1.0.6](https://github.com/Altafreza/semantic-release/compare/v1.0.5...v1.0.6) (2025-02-02)
 
 
