@@ -1,3 +1,10 @@
+## [1.5.12](https://github.com/Altafreza/semantic-release/compare/1.5.11...1.5.12) (2025-02-02)
+
+
+### Bug Fixes
+
+* restore specific prerelease identifiers ([36ccc19](https://github.com/Altafreza/semantic-release/commit/36ccc19db46fe46a139ef5ecaa094637f6b3f4f8))
+
 ## [1.5.11](https://github.com/Altafreza/semantic-release/compare/1.5.10...1.5.11) (2025-02-02)
 
 
