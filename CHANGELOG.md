@@ -1,5 +1,12 @@
 # Semantic Release Changelog
 
+## [1.4.1](https://github.com/Altafreza/semantic-release/compare/1.4.0...1.4.1) (2025-02-02)
+
+
+### Bug Fixes
+
+* update prerelease configuration ([49089ba](https://github.com/Altafreza/semantic-release/commit/49089ba86bb95725a005509e6441cd8beaea5228))
+
 # [1.4.0](https://github.com/Altafreza/semantic-release/compare/1.3.1...1.4.0) (2025-02-02)
 
 
