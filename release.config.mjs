@@ -25,7 +25,7 @@ export default {
       channel: 'hotfix'
     }
   ],
-  tagFormat: '${version}-${branch}',
+  tagFormat: 'v${version}',
   plugins: [
     ['@semantic-release/commit-analyzer', {
       preset: 'angular',
