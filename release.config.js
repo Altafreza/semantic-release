@@ -4,27 +4,23 @@ export default {
     'main',
     {
       name: 'develop',
-      prerelease: 'beta',
       channel: 'beta',
-      prereleaseSuffix: 'beta'
+      prerelease: 'beta'
     },
     {
       name: 'qa',
-      prerelease: 'qa',
       channel: 'qa',
-      prereleaseSuffix: 'qa'
+      prerelease: 'qa'
     },
     {
       name: 'uat',
-      prerelease: 'uat',
       channel: 'uat',
-      prereleaseSuffix: 'uat'
+      prerelease: 'uat'
     },
     {
       name: 'hotfix',
-      prerelease: 'hotfix',
       channel: 'hotfix',
-      prereleaseSuffix: 'hotfix'
+      prerelease: 'hotfix'
     }
   ],
   plugins: [
@@ -52,48 +48,18 @@ export default {
       changelogTitle: '# Semantic Release Changelog'
     }],
     ['@semantic-release/npm', {
-      npmPublish: false,
-      tarballDir: 'dist'
+      npmPublish: false
     }],
     ['@semantic-release/git', {
       assets: ['package.json', 'package-lock.json', 'CHANGELOG.md'],
       message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
     }],
     ['@semantic-release/github', {
-      assets: 'dist/*.tgz'
+      assets: ['CHANGELOG.md', 'package.json'],
+      successComment: "Release version ${nextRelease.version} is now available",
+      failComment: "The automated release failed. Please check the logs for more details."
     }]
   ],
-  // Custom configuration for version inheritance
   tagFormat: '${version}',
-  preset: 'angular',
-  gitflow: true,
-  // Version inheritance rules
-  versionInheritance: {
-    develop: 'main',
-    qa: 'develop',
-    uat: 'qa',
-    hotfix: 'main'
-  },
-  // Version format by branch
-  versionFormat: {
-    develop: '${version}-beta.${prerelease}',
-    qa: '${version}-qa.${prerelease}',
-    uat: '${version}-uat.${prerelease}',
-    hotfix: '${version}-hotfix.${prerelease}'
-  },
-  // Success hooks for version propagation
-  success: [
-    '@semantic-release/github',
-    {
-      successFile: '.version',
-      assets: ['CHANGELOG.md', 'package.json']
-    }
-  ],
-  // Fail hooks for rollback
-  fail: [
-    '@semantic-release/github',
-    {
-      failComment: true
-    }
-  ]
+  preset: 'angular'
 }
