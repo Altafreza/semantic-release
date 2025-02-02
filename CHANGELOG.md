@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/Altafreza/semantic-release/compare/1.5.1...1.5.2) (2025-02-02)
+
+
+### Bug Fixes
+
+* update prerelease configuration for correct version format ([9ad3208](https://github.com/Altafreza/semantic-release/commit/9ad3208cf3acf79834e302829baeb14fb1692c02))
+
 ## [1.5.1](https://github.com/Altafreza/semantic-release/compare/1.5.0...1.5.1) (2025-02-02)
 
 
