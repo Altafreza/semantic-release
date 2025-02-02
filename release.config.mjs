@@ -12,26 +12,35 @@ export default {
     {
       name: 'develop',
       channel: 'beta',
-      prerelease: 'beta'
+      prerelease: true
     },
     {
       name: 'qa',
       channel: 'qa',
-      prerelease: 'qa'
+      prerelease: true
     },
     {
       name: 'uat',
       channel: 'uat',
-      prerelease: 'uat'
+      prerelease: true
     },
     {
       name: 'hotfix/*',
       channel: 'hotfix',
-      prerelease: 'hotfix'
+      prerelease: true
     }
   ],
   plugins: [
-    '@semantic-release/commit-analyzer',
+    ['@semantic-release/commit-analyzer', {
+      preset: 'angular',
+      releaseRules: [
+        { type: 'docs', release: 'patch' },
+        { type: 'refactor', release: 'patch' },
+        { type: 'style', release: 'patch' },
+        { type: 'ci', release: 'patch' },
+        { type: 'test', release: 'patch' }
+      ]
+    }],
     '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
     ['@semantic-release/npm', {
