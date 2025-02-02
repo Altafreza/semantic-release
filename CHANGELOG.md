@@ -1,5 +1,12 @@
 # Semantic Release Changelog
 
+# [1.5.0](https://github.com/Altafreza/semantic-release/compare/1.4.1...1.5.0) (2025-02-02)
+
+
+### Features
+
+* test beta version format ([86716f0](https://github.com/Altafreza/semantic-release/commit/86716f050c0acaefc9fa54d17861f59f6b74b670))
+
 ## [1.4.1](https://github.com/Altafreza/semantic-release/compare/1.4.0...1.4.1) (2025-02-02)
 
 
