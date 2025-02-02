@@ -1,3 +1,22 @@
+## [1.0.8](https://github.com/Altafreza/semantic-release/compare/v1.0.7...v1.0.8) (2025-02-02)
+
+
+### Bug Fixes
+
+* simplify release scripts and remove custom tag format ([ec28f79](https://github.com/Altafreza/semantic-release/commit/ec28f794c43d0b6b1a5efaec044a54e8dec718e8))
+* simplify tag format ([f36f082](https://github.com/Altafreza/semantic-release/commit/f36f082ad6cd9a387b8de74ee2ceb476fc9b87fa))
+* simplify tag format in release scripts ([cf74dcd](https://github.com/Altafreza/semantic-release/commit/cf74dcd81e37b56fd8103ff1e2c04000ccae844a))
+* update configuration to handle prerelease versions ([3c88b84](https://github.com/Altafreza/semantic-release/commit/3c88b84173f0415f2d56184187a29766a1c1717d))
+* update prerelease configuration ([e8ed2eb](https://github.com/Altafreza/semantic-release/commit/e8ed2eb12239350ecada63c1a4abab308ef81a46))
+* update release configuration for proper prerelease versioning ([1593edd](https://github.com/Altafreza/semantic-release/commit/1593edd88035c506b1187c45f630ce8f63403c07))
+* update release scripts to include prerelease flag ([507d213](https://github.com/Altafreza/semantic-release/commit/507d21337380f72fa35d484e52ae7e2a93f85e32))
+* update release scripts with custom tag format ([553d857](https://github.com/Altafreza/semantic-release/commit/553d857f77ff72a4ae8e135eb7ec5f4e6f632cb6))
+* update release scripts with prerelease and tag format ([ca0cf50](https://github.com/Altafreza/semantic-release/commit/ca0cf507aa3cf7147024f02062b0abd1f5c9e9d7))
+* update tag format and prerelease configuration ([b1c452f](https://github.com/Altafreza/semantic-release/commit/b1c452f10bb24e9ad8252b59462c698d0a364a90))
+* update tag format to include branch name ([8bc7e00](https://github.com/Altafreza/semantic-release/commit/8bc7e00273d8772d1ec960ab81ce71091776a88c))
+* update tag format to include prerelease identifier ([74b781e](https://github.com/Altafreza/semantic-release/commit/74b781e63b7cf03536bbe63de2e113732e2effd3))
+* update version format configuration for prerelease versions ([e9d7ec7](https://github.com/Altafreza/semantic-release/commit/e9d7ec746fd9ece4ec6e6178c5260ba5f119a500))
+
 ## [1.5.10](https://github.com/Altafreza/semantic-release/compare/1.5.9...1.5.10) (2025-02-02)
 
 
