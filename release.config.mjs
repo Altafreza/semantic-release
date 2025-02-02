@@ -3,11 +3,27 @@
  */
 export default {
   branches: [
-    { name: 'main' },
-    { name: 'develop', channel: 'beta', prerelease: 'beta' },
-    { name: 'qa', channel: 'qa', prerelease: 'qa' },
-    { name: 'uat', channel: 'uat', prerelease: 'uat' },
-    { name: 'hotfix/*', channel: 'hotfix', prerelease: '${name.replace(/^hotfix\\//, "")}' }
+    'main',
+    {
+      name: 'develop',
+      prerelease: true,
+      channel: 'beta'
+    },
+    {
+      name: 'qa',
+      prerelease: true,
+      channel: 'qa'
+    },
+    {
+      name: 'uat',
+      prerelease: true,
+      channel: 'uat'
+    },
+    {
+      name: 'hotfix/*',
+      prerelease: '${name.replace(/^hotfix\\//, "")}',
+      channel: 'hotfix'
+    }
   ],
   tagFormat: '${version}',
   plugins: [
