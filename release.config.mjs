@@ -6,17 +6,17 @@ export default {
     'main',
     {
       name: 'develop',
-      prerelease: '${name.replace(/^develop\\//, "")}',
+      prerelease: 'beta',
       channel: 'beta'
     },
     {
       name: 'qa',
-        prerelease: '${name.replace(/^qa\\//, "")}',
+      prerelease: 'qa',
       channel: 'qa'
     },
     {
       name: 'uat',
-      prerelease: '${name.replace(/^uat\\//, "")}',
+      prerelease: 'uat',
       channel: 'uat'
     },
     {
@@ -25,7 +25,6 @@ export default {
       channel: 'hotfix'
     }
   ],
-  tagFormat: '${version}',
   plugins: [
     ['@semantic-release/commit-analyzer', {
       preset: 'angular',
