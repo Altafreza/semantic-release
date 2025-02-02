@@ -6,17 +6,17 @@ export default {
     'main',
     {
       name: 'develop',
-      prerelease: 'beta',
+      prerelease: '${name.replace(/^develop\\//, "")}',
       channel: 'beta'
     },
     {
       name: 'qa',
-      prerelease: 'qa',
+        prerelease: '${name.replace(/^qa\\//, "")}',
       channel: 'qa'
     },
     {
       name: 'uat',
-      prerelease: 'uat',
+      prerelease: '${name.replace(/^uat\\//, "")}',
       channel: 'uat'
     },
     {
