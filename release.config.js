@@ -60,6 +60,6 @@ export default {
       failComment: "The automated release failed. Please check the logs for more details."
     }]
   ],
-  tagFormat: '${version}-${prerelease.name}.${prerelease.number}',
+  tagFormat: '${version}-${branch}',
   preset: 'angular'
 }
