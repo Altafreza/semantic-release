@@ -3,27 +3,31 @@
  */
 export default {
   preset: 'angular',
+  tagFormat: '${version}',
   branches: [
-    'main',
+    {
+      name: 'main',
+      channel: 'latest'
+    },
     {
       name: 'develop',
-      prerelease: 'beta',
-      channel: 'beta'
+      channel: 'beta',
+      prerelease: 'beta'
     },
     {
       name: 'qa',
-      prerelease: 'qa',
-      channel: 'qa'
+      channel: 'qa',
+      prerelease: 'qa'
     },
     {
       name: 'uat',
-      prerelease: 'uat',
-      channel: 'uat'
+      channel: 'uat',
+      prerelease: 'uat'
     },
     {
       name: 'hotfix/*',
-      prerelease: 'hotfix',
-      channel: 'hotfix'
+      channel: 'hotfix',
+      prerelease: 'hotfix'
     }
   ],
   plugins: [
