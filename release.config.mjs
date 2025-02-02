@@ -5,7 +5,7 @@ export default {
   preset: 'angular',
   branches: [
     'main',
-    { name: 'beta', channel: 'beta', prerelease: 'beta' },
+    { name: 'beta', channel: 'beta', prerelease: true },
     { name: 'qa', prerelease: 'qa' },
     { name: 'uat', prerelease: 'uat' },
     { name: 'hotfix/*', prerelease: '${name.replace(/^hotfix\\//, "")}' }
