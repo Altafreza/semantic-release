@@ -3,32 +3,12 @@
  */
 export default {
   preset: 'angular',
-  tagFormat: '${version}',
   branches: [
-    {
-      name: 'main',
-      channel: 'latest'
-    },
-    {
-      name: 'develop',
-      channel: 'beta',
-      prerelease: 'beta'
-    },
-    {
-      name: 'qa',
-      channel: 'qa',
-      prerelease: 'qa'
-    },
-    {
-      name: 'uat',
-      channel: 'uat',
-      prerelease: 'uat'
-    },
-    {
-      name: 'hotfix/*',
-      channel: 'hotfix',
-      prerelease: 'hotfix'
-    }
+    'main',
+    'develop',
+    'qa',
+    'uat',
+    'hotfix/*'
   ],
   plugins: [
     ['@semantic-release/commit-analyzer', {
