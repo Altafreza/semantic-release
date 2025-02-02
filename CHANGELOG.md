@@ -1,3 +1,10 @@
+## [1.5.13](https://github.com/Altafreza/semantic-release/compare/1.5.12...1.5.13) (2025-02-02)
+
+
+### Bug Fixes
+
+* add explicit prerelease flag to release scripts ([43ae823](https://github.com/Altafreza/semantic-release/commit/43ae823297b78b501fcf315f2c8440d35ce83c77))
+
 ## [1.5.12](https://github.com/Altafreza/semantic-release/compare/1.5.11...1.5.12) (2025-02-02)
 
 
