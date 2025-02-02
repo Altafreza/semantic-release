@@ -4,23 +4,23 @@ export default {
     'main',
     {
       name: 'develop',
-      prerelease: 'beta',
-      channel: 'beta'
+      channel: 'beta',
+      prerelease: true
     },
     {
       name: 'qa',
-      prerelease: 'qa',
-      channel: 'qa'
+      channel: 'qa',
+      prerelease: true
     },
     {
       name: 'uat',
-      prerelease: 'uat',
-      channel: 'uat'
+      channel: 'uat',
+      prerelease: true
     },
     {
       name: 'hotfix/*',
-      prerelease: 'hotfix',
-      channel: 'hotfix'
+      channel: 'hotfix',
+      prerelease: true
     }
   ],
   plugins: [
