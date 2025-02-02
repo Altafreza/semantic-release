@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/Altafreza/semantic-release/compare/1.5.2...1.5.3) (2025-02-02)
+
+
+### Bug Fixes
+
+* finalize version format configuration ([b21fe7a](https://github.com/Altafreza/semantic-release/commit/b21fe7a6023260c9b63e6b7512dfef18a19cd5a2))
+
 ## [1.5.2](https://github.com/Altafreza/semantic-release/compare/1.5.1...1.5.2) (2025-02-02)
 
 
