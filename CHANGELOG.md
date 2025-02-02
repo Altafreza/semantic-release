@@ -1,3 +1,5 @@
+## [1.0.10-beta.2]() (2025-02-02)
+
 ## [1.0.10-beta.1](https://github.com/Altafreza/semantic-release/compare/v1.0.9...v1.0.10-beta.1) (2025-02-02)
 
 
