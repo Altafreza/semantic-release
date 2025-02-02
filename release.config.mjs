@@ -6,17 +6,17 @@ export default {
     'main',
     {
       name: 'develop',
-      prerelease: true,
+      prerelease: 'beta',
       channel: 'beta'
     },
     {
       name: 'qa',
-      prerelease: true,
+      prerelease: 'qa',
       channel: 'qa'
     },
     {
       name: 'uat',
-      prerelease: true,
+      prerelease: 'uat',
       channel: 'uat'
     },
     {
