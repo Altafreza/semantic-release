@@ -1,3 +1,13 @@
+## [1.0.9](https://github.com/Altafreza/semantic-release/compare/v1.0.8...v1.0.9) (2025-02-02)
+
+
+### Bug Fixes
+
+* add explicit prerelease flag to release scripts ([43ae823](https://github.com/Altafreza/semantic-release/commit/43ae823297b78b501fcf315f2c8440d35ce83c77))
+* remove custom tag format to use semantic-release defaults ([c36bba6](https://github.com/Altafreza/semantic-release/commit/c36bba64ac8f8006db06c24a9dbffb406bf9225d))
+* restore specific prerelease identifiers ([36ccc19](https://github.com/Altafreza/semantic-release/commit/36ccc19db46fe46a139ef5ecaa094637f6b3f4f8))
+* update prerelease configuration for proper versioning ([5b73fac](https://github.com/Altafreza/semantic-release/commit/5b73fac8c353256241dc9a2ecc0569080f70973f))
+
 ## [1.5.13](https://github.com/Altafreza/semantic-release/compare/1.5.12...1.5.13) (2025-02-02)
 
 
