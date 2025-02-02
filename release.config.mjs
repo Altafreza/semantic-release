@@ -12,22 +12,22 @@ export default {
     {
       name: 'develop',
       channel: 'beta',
-      prerelease: true
+      prerelease: 'beta'
     },
     {
       name: 'qa',
       channel: 'qa',
-      prerelease: true
+      prerelease: 'qa'
     },
     {
       name: 'uat',
       channel: 'uat',
-      prerelease: true
+      prerelease: 'uat'
     },
     {
       name: 'hotfix/*',
       channel: 'hotfix',
-      prerelease: true
+      prerelease: 'hotfix'
     }
   ],
   plugins: [
@@ -41,7 +41,9 @@ export default {
         { type: 'test', release: 'patch' }
       ]
     }],
-    '@semantic-release/release-notes-generator',
+    ['@semantic-release/release-notes-generator', {
+      preset: 'angular'
+    }],
     '@semantic-release/changelog',
     ['@semantic-release/npm', {
       npmPublish: false,
