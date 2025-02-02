@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/Altafreza/semantic-release/compare/1.5.4...1.5.5) (2025-02-02)
+
+
+### Bug Fixes
+
+* update release scripts to include prerelease flag ([507d213](https://github.com/Altafreza/semantic-release/commit/507d21337380f72fa35d484e52ae7e2a93f85e32))
+
 ## [1.5.4](https://github.com/Altafreza/semantic-release/compare/1.5.3...1.5.4) (2025-02-02)
 
 
